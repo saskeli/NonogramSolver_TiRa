@@ -9,13 +9,12 @@ namespace GameLib
 {
     public class Nonogram
     {
-        private readonly Regex nl = new Regex(@"(?:\r(?:\n)|\n)");
-        public Nonogram(string simple)
+        private TileData tiles;
+        private NumberData numbers;
+        public Nonogram(int[][] colums, int[][] rows)
         {
-            foreach (string s in nl.Split(simple))
-            {
-                
-            }
+            tiles = new TileData(colums.Length, rows.Length);
+            numbers = new NumberData(colums, rows);
         }
     }
 }

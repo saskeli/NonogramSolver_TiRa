@@ -7,14 +7,13 @@ using GameLib;
 
 namespace SolverConsole
 {
-    class Program
+    internal class Program
     {
-        static private readonly string simple =
-            "width 4\r\nheight 5\r\n\r\nrows\r\n4\r\n1,1\r\n1,1\r\n1,2\r\n3\r\n\r\ncolumns\r\n5\r\n1,1\r\n1,2\r\n4";
+        private const string Simple = "4,5\r\n4\r\n1,1\r\n1,1\r\n1,2\r\n3\r\n5\r\n1,1\r\n1,2\r\n4\r\n";
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Nonogram ng = new Nonogram(simple);
+            Nonogram ng = NonoGramFactory.ParseFromString(Simple);
         }
     }
 }
