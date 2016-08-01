@@ -23,6 +23,6 @@ Also writing parsers is boring.
 
 ##Next week
 
-A lot of coding and creating a dough class diagram/outline.
+A lot of coding and creating a rough class diagram/outline.
 
 Ideally have a working (very bad) nonogram solver. Hopefully able to solve trivial nonograms.
