@@ -1,3 +1,17 @@
 #Hour reporting
 
 ##Week 1
+
+Date       | time | target |
+-----------|------|--------|
+2016-07-27 | 1,5h | Project creation on git and visual studio. Structure design |
+2016-07-28 | 2h   | Structure design. No commits |
+2016-07-29 | 3h   | Structure dedign. Started coding (none of this code survived) A lot never even got to git |
+2016-09-01 | 3h   | Structure design. Started coding some real usable code |
+
+##Totals
+
+ Week   | Time    |
+--------|---------|
+ 1      | 9,5     |
+**Tot** | **9,5** |
