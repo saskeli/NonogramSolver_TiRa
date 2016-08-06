@@ -21,6 +21,10 @@ implement threading functionality.
 
 Also writing parsers is boring.
 
+##Questions
+
+Are nullable primals ("int?" "bool?") considered datastructures for the purposes of this course. I.E. Do I need to write my own nullable primals?
+
 ##Next week
 
 A lot of coding and creating a rough class diagram/outline.
