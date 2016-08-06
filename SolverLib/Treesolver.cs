@@ -118,53 +118,6 @@ namespace SolverLib
             return false;
         }
 
-        private bool FalsePositive(Nonogram ng, int row, int column)
-        {
-            int? startpoint = null;
-            int idx = 0;
-            int unint = 0;
-            for (int i = 0; i < ng.Width; i++)
-            {
-                if (ng.IsTrue(row, i))
-                {
-                    if (!startpoint.HasValue) startpoint = i;
-                    unint++;
-                    while (true)
-                    {
-                        int num = ng.GetRowNum(row, idx);
-                        if (num == 0)  return true;
-                        if (i + 1 - startpoint.Value <= num) break;
-                        startpoint = i + 1 - unint;
-                        idx++;
-                    }
-                }
-                else
-                {
-                    unint = 0;
-                }
-            }
-            startpoint = null;
-            idx = 0;
-            unint = 0;
-            for (int i = 0; i < ng.Height; i++)
-            {
-                if (ng.IsTrue(i, column))
-                {
-                    if (!startpoint.HasValue) startpoint = i;
-                    unint++;
-                    while (true)
-                    {
-                        int num = ng.GetColumnNum(column, idx);
-                        if (num == 0) return true;
-                        if (i + 1 - startpoint.Value <= num) break;
-                        startpoint = i + 1 - unint;
-                        idx++;
-                    }
-                }
-            }
-            return false;
-        }
-
         public bool Solved()
         {
             return _solved;
