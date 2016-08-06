@@ -106,5 +106,15 @@ namespace GameLib
         {
             return idx < _columnNumbers[column].Length ? _columnNumbers[column][idx] : 0;
         }
+
+        public int RowSum(int row)
+        {
+            return _rowNumbers[row].Sum();
+        }
+
+        public int ColumnSum(int column)
+        {
+            return _columnNumbers[column].Sum();
+        }
     }
 }

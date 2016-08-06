@@ -57,6 +57,18 @@ namespace SolverLib
 
         private bool Error(Nonogram ng, int row, int column)
         {
+            int lineSum = ng.RowSum(row);
+            for (int i = 0; i < ng.Width; i++)
+            {
+                if (ng.IsTrue(row, i)) lineSum--;
+                if (lineSum < 0) return true;
+            }
+            lineSum = ng.ColumnSum(column);
+            for (int i = 0; i < ng.Height; i++)
+            {
+                if (ng.IsTrue(i, column)) lineSum--;
+                if (lineSum < 0) return true;
+            }
             if (column == ng.Width - 1)
             {
                 int num = 0;

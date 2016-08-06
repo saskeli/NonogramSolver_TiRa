@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,14 +18,21 @@ namespace SolverConsole
         {
             Stopwatch sw = Stopwatch.StartNew();
             Nonogram ng = NonoGramFactory.ParseFromString(Simple);
+            sw.Stop();
             Console.WriteLine("Nonogram parsed in " + sw.Elapsed.TotalMilliseconds + "ms.");
-            Console.WriteLine("\r\n" + ng);
-            sw.Reset();
             TreeSolver ts = new TreeSolver();
             ts.Run(ng);
             Console.WriteLine("Solved with TreeSolver: " + ts.Solved());
             Console.WriteLine("TreeSolver runtime: " + ts.BenchTime().TotalMilliseconds + "ms");
-            Console.WriteLine("\r\n" + ng);
+
+            sw.Restart();
+            ng = NonoGramFactory.ParseFromFile(Path.Combine(Environment.CurrentDirectory, "Data/joker.txt"));
+            sw.Stop();
+            Console.WriteLine("Nonogram parsed in " + sw.Elapsed.TotalMilliseconds + "ms.");
+            ts.Run(ng);
+            Console.WriteLine("Solved with TreeSolver: " + ts.Solved());
+            Console.WriteLine("TreeSolver runtime: " + ts.BenchTime().TotalMilliseconds + "ms");
+            Console.WriteLine(ng);
             Console.WriteLine("Any key to terminate.");
             Console.ReadKey();
         }

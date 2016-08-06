@@ -11,6 +11,7 @@ namespace GameLib
     {
         public static Nonogram ParseFromFile(string path)
         {
+            bool interrupted = false;
             int[][] rows = null;
             int[][] columns = null;
             int workingIndex = 0;
@@ -82,8 +83,29 @@ namespace GameLib
                     }
                     if (columns != null && rows != null && workingIndex >= columns.Length + rows.Length)
                     {
+                        interrupted = true;
                         break;
                     }
+                }
+            }
+            // Adds the last line if there was no line break after the last relevant data.
+            if (!interrupted && (workingList != null || currInt.HasValue))
+            {
+                if (workingList == null) workingList = new List<int>();
+                if (currInt.HasValue && currInt.Value > 0) workingList.Add(currInt.Value);
+                if (workingIndex < rows.Length)
+                {
+                    int[] arr = workingList.ToArray();
+                    if (InvalidSum(arr, columns.Length)) throw new ArgumentException(
+                        "Invalid row definition for row " + (workingIndex + 1), nameof(path));
+                    rows[workingIndex] = arr;
+                }
+                else
+                {
+                    int[] arr = workingList.ToArray();
+                    if (InvalidSum(arr, rows.Length)) throw new ArgumentException(
+                        "Invalid column definition for column" + (workingIndex - rows.Length + 1), nameof(path));
+                    columns[workingIndex - rows.Length] = arr;
                 }
             }
             if (MissingData(columns, rows)) throw new ArgumentException(
