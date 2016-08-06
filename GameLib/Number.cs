@@ -2,17 +2,16 @@
 {
     internal class Number
     {
-        private readonly int _value;
-        private bool _done = false;
+        public int Value { get; }
 
         public Number(int value)
         {
-            _value = value;
+            Value = value;
         }
 
         public override string ToString()
         {
-            return _value.ToString();
+            return Value.ToString();
         }
     }
 }

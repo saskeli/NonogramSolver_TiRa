@@ -3,7 +3,7 @@
     internal class Tile
     {
         private int _priority;
-        private bool? _state = null;
+        public bool? State = null;
 
         public Tile(int prio)
         {
@@ -12,9 +12,9 @@
 
         public char ToChar()
         {
-            if (_state.HasValue)
+            if (State.HasValue)
             {
-                return _state.Value ? ' ' : '█';
+                return State.Value ? '█' : ' ';
             }
             return '?';
         }

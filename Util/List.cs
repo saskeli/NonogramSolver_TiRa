@@ -75,8 +75,17 @@ namespace Util
             return returnable;
         }
 
+        public T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= _nexIndex) throw new ArgumentOutOfRangeException();
+                return _data[index];
+            }
+        }
+
         /// <summary>
-        /// NUber of elements in the List.
+        /// Number of elements in the List.
         /// </summary>
         public int Count
         {

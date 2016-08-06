@@ -40,7 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Treesolver.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameLib\GameLib.csproj">
+      <Project>{0d6326c5-90d0-43c2-a159-dfda4cbd034c}</Project>
+      <Name>GameLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{4cfcbab4-3b8e-4611-83cf-00ef21741754}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

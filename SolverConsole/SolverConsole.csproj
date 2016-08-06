@@ -54,6 +54,10 @@
       <Project>{0d6326c5-90d0-43c2-a159-dfda4cbd034c}</Project>
       <Name>GameLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SolverLib\SolverLib.csproj">
+      <Project>{da4028c1-aec0-46b0-95fa-700a8ccb23f5}</Project>
+      <Name>SolverLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
