@@ -9,12 +9,31 @@ namespace GameLib
 {
     public class Nonogram
     {
-        private TileData tiles;
-        private NumberData numbers;
+        private readonly TileData _tiles;
+        private readonly NumberData _numbers;
         public Nonogram(int[][] colums, int[][] rows)
         {
-            tiles = new TileData(colums.Length, rows.Length);
-            numbers = new NumberData(colums, rows);
+            _tiles = new TileData(colums.Length, rows.Length);
+            _numbers = new NumberData(colums, rows);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < _tiles.Height; i++)
+            {
+                sb.Append(_tiles.RowString(i));
+                sb.Append("| ");
+                sb.AppendLine(_numbers.RowsString(i));
+            }
+            sb.AppendLine("Columndata:");
+            for (int i = 0; i < _tiles.Width; i++)
+            {
+                sb.Append("c" + i + ": ");
+                sb.AppendLine(_numbers.ColumnString(i));
+            }
+
+            return sb.ToString();
         }
     }
 }

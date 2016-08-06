@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLib", "GameLib\GameLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolverLib", "SolverLib\SolverLib.csproj", "{DA4028C1-AEC0-46B0-95FA-700A8CCB23F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", "{4CFCBAB4-3B8E-4611-83CF-00EF21741754}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DA4028C1-AEC0-46B0-95FA-700A8CCB23F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA4028C1-AEC0-46B0-95FA-700A8CCB23F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA4028C1-AEC0-46B0-95FA-700A8CCB23F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CFCBAB4-3B8E-4611-83CF-00EF21741754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CFCBAB4-3B8E-4611-83CF-00EF21741754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CFCBAB4-3B8E-4611-83CF-00EF21741754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CFCBAB4-3B8E-4611-83CF-00EF21741754}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
