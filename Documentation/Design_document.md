@@ -36,9 +36,9 @@ GUI:
 * algorith simulation (Slow fill)
 * limited benchmarks
 
-##Very rough design diagram
+##Conseptual design diagram
 
-![Conceptual diagram] (https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Rough_structural_design_diagram.png)
+![Conceptual diagram] (https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Data/Rough_structural_design_diagram.png)
 
 The diagram above shows the broad strokes of the structural design. 
 
@@ -47,3 +47,9 @@ The main take-aways would probably be:
 * the 2 separate entry-points, one intended for benchmarking as a console application and one for drawing pretty pictures and showing the work of the algorithms.
  
 * The idea of having a generic solver interface that allows a neat modular design and lets the solvers do whatever they want.
+ 
+## Class diagram
+
+![Class diagram] (https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Data/Class_diagram.png)
+
+The diagram above shows current class structure of the project, excluding test classes
