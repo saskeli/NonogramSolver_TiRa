@@ -38,6 +38,17 @@ namespace Util.Tests
         }
 
         [TestMethod()]
+        public void ResizeTest()
+        {
+            List<bool> li = new List<bool>();
+            for (int i = 0; i < 100; i++)
+            {
+                li.Add(i % 2 == 0);
+            }
+            Assert.AreEqual(100, li.Count);
+        }
+
+        [TestMethod()]
         [ExpectedException(typeof(OutOfMemoryException),
             "Something very strange happened. Created bigger array than possible")]
         public void ToioBigListTest()
@@ -56,6 +67,32 @@ namespace Util.Tests
             Assert.AreEqual(2, arr.Length);
             Assert.AreEqual(2, arr[0]);
             Assert.AreEqual(123, arr[1]);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void InvalidIndexTest()
+        {
+            List<int> li = new List<int>();
+            int i = li[0];
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void InvalidIndex2Test()
+        {
+            List<int> li = new List<int>();
+            int i = li[-1];
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void InvalidIndex3Test()
+        {
+            List<int> li = new List<int>();
+            li.Add(2);
+            li.Add(15);
+            int i = li[2];
         }
     }
 }

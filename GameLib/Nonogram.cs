@@ -124,8 +124,8 @@ namespace GameLib
         /// <param name="val">Value to set</param>
         public void Set(int row, int column, bool val)
         {
+            if (!Resolved(row, column)) LeftToClear--;
             _tiles[row][column].State = val;
-            LeftToClear--;
         }
 
         /// <summary>
