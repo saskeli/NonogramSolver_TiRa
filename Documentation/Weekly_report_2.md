@@ -12,7 +12,7 @@ Week 2 course goals:
 
 Goals from week 1:
 
-* Class diagram done
+* [Class diagram done](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Design_document.md)
 * Bunch of coding done
 * Working (very bad) solver can solve trivial nonograms
 
