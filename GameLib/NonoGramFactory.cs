@@ -1,14 +1,22 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Util;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GameLib
 {
+    /// <summary>
+    /// Factory class for generating nonograms from string or file data
+    /// </summary>
     public class NonoGramFactory
     {
+        /// <summary>
+        /// Generates a nonogram object from CSV file data
+        /// </summary>
+        /// <param name="path">Path to file</param>
+        /// <returns>Nonogram object</returns>
         public static Nonogram ParseFromFile(string path)
         {
             bool interrupted = false;
@@ -93,9 +101,11 @@ namespace GameLib
             {
                 if (workingList == null) workingList = new List<int>();
                 if (currInt.HasValue && currInt.Value > 0) workingList.Add(currInt.Value);
+                Debug.Assert(rows != null, "rows != null"); // At this poing parseable file would be highly invalid anyway.
                 if (workingIndex < rows.Length)
                 {
                     int[] arr = workingList.ToArray();
+                    Debug.Assert(columns != null, "columns != null"); // At this poing parseable file would be highly invalid anyway.
                     if (InvalidSum(arr, columns.Length)) throw new ArgumentException(
                         "Invalid row definition for row " + (workingIndex + 1), nameof(path));
                     rows[workingIndex] = arr;
@@ -105,6 +115,7 @@ namespace GameLib
                     int[] arr = workingList.ToArray();
                     if (InvalidSum(arr, rows.Length)) throw new ArgumentException(
                         "Invalid column definition for column" + (workingIndex - rows.Length + 1), nameof(path));
+                    Debug.Assert(columns != null, "columns != null"); // At this poing parseable file would be highly invalid anyway.
                     columns[workingIndex - rows.Length] = arr;
                 }
             }
@@ -115,6 +126,11 @@ namespace GameLib
             return new Nonogram(columns, rows);
         }
 
+        /// <summary>
+        /// Generates a nonogram object based on string CSV data
+        /// </summary>
+        /// <param name="parseable">Strign data</param>
+        /// <returns>Nonogram object</returns>
         public static Nonogram ParseFromString(string parseable)
         {
             int[][] rows = null;
@@ -122,7 +138,7 @@ namespace GameLib
             int workingIndex = 0;
             List<int> workingList = null;
             int? currInt = null;
-            foreach (char c in parseable.ToCharArray())
+            foreach (char c in parseable)
             {
                 if (c >= '0' && c <= '9')
                 {
@@ -195,11 +211,23 @@ namespace GameLib
             return new Nonogram(columns, rows);
         }
 
+        /// <summary>
+        /// Check for null rows or columns
+        /// </summary>
+        /// <param name="columns">Jagged array of column clues</param>
+        /// <param name="rows">Jagged array of row clues</param>
+        /// <returns>True if row or column data contains null arrays</returns>
         private static bool MissingData(int[][] columns, int[][] rows)
         {
             return columns.Any(column => column == null) || rows.Any(row => row == null);
         }
 
+        /// <summary>
+        /// Checks that the total of row clues matches the total of column clues
+        /// </summary>
+        /// <param name="columns">Jagged array of column clues</param>
+        /// <param name="rows">Jagged array of row clues</param>
+        /// <returns>True if totals do not match</returns>
         private static bool InvalidTotal(int[][] columns, int[][] rows)
         {
             int cTot = columns.Sum(column => column.Sum());
@@ -207,6 +235,12 @@ namespace GameLib
             return rTot != cTot;
         }
 
+        /// <summary>
+        /// Checks if the array has a total higher than possible for nonograms
+        /// </summary>
+        /// <param name="arr">Array of row or column clues.</param>
+        /// <param name="maxSUm">Width or hight of nonogram as applicable.</param>
+        /// <returns>True if the array contains invalid clue.</returns>
         private static bool InvalidSum(int[] arr, int maxSUm)
         {
             return arr.Length - 1 + arr.Sum() > maxSUm;

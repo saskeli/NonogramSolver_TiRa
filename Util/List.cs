@@ -9,7 +9,7 @@ namespace Util
     public class List<T>
     {
         private T[] _data;
-        private int _nexIndex = 0;
+        private int _nexIndex;
 
         /// <summary>
         /// Create a new List object with a default initial capacity.

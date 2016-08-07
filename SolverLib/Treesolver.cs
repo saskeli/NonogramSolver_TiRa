@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameLib;
 using Util;
 
 namespace SolverLib
 {
+    /// <summary>
+    /// Gametree based nonogram solver class. Scales 2^n.
+    /// </summary>
     public class TreeSolver : ISolver
     {
-        private bool _solved = false;
+        private bool _solved;
         private TimeSpan _benchTime = TimeSpan.Zero;
 
+        /// <summary>
+        /// Attempt to solve the given nonogram
+        /// </summary>
+        /// <param name="ng">Nonogram to solve</param>
+        /// <returns>Number of resolved tiles</returns>
         public int Run(Nonogram ng)
         {
             _solved = false;
@@ -25,6 +30,13 @@ namespace SolverLib
             return resolved;
         }
 
+        /// <summary>
+        /// Recursive gamtree for nonotgrams
+        /// </summary>
+        /// <param name="ng">Nonogram to solve</param>
+        /// <param name="row">Row index process</param>
+        /// <param name="column">Column index to process</param>
+        /// <returns>Number of resolved tiles. -1 if there was a previous error</returns>
         private int Treesolve(Nonogram ng, int row, int column)
         {
             int nColumn = column + 1 < ng.Width ? column + 1 : 0;
@@ -55,6 +67,13 @@ namespace SolverLib
             return nRow < ng.Height ? Treesolve(ng, nRow, nColumn) : 0;
         }
 
+        /// <summary>
+        /// Checks nonogram for obvious errors related to specified tile.
+        /// </summary>
+        /// <param name="ng">Nonogram to check</param>
+        /// <param name="row">Row index of tile</param>
+        /// <param name="column">Column index of tile</param>
+        /// <returns>True if error was found.</returns>
         private bool Error(Nonogram ng, int row, int column)
         {
             int lineSum = ng.RowSum(row);
@@ -118,11 +137,19 @@ namespace SolverLib
             return false;
         }
 
+        /// <summary>
+        /// Checks wether a nonogram was solved
+        /// </summary>
+        /// <returns>True if the solver has been run and the last run resulted in a solved nonogram</returns>
         public bool Solved()
         {
             return _solved;
         }
 
+        /// <summary>
+        /// Time spent on number crunching.
+        /// </summary>
+        /// <returns>Timespan representing the time spent on last Run method</returns>
         public TimeSpan BenchTime()
         {
             return _benchTime;
