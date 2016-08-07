@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\users\saskeli\documents\visual studio 2015\projects\nonogramsolver\gamelib\nonogramfactory.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Diagnostics;
+using System.IO;
+using Util;
+using System.Linq;
+using System.Text;
+
+namespace GameLib
+{
+    /// &lt;summary&gt;
+    /// Factory class for generating nonograms from string or file data
+    /// &lt;/summary&gt;
+    public class NonoGramFactory
+    {
+        /// &lt;summary&gt;
+        /// Generates a nonogram object from CSV file data
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;path&quot;&gt;Path to file&lt;/param&gt;
+        /// &lt;returns&gt;Nonogram object&lt;/returns&gt;
+        public static Nonogram ParseFromFile(string path)
+        {
+            bool interrupted = false;
+            int[][] rows = null;
+            int[][] columns = null;
+            int workingIndex = 0;
+            List&lt;int&gt; workingList = null;
+            int? currInt = null;
+            using (StreamReader sr = new StreamReader(path, Encoding.UTF8, true))
+            {
+                while (!sr.EndOfStream)
+                {
+                    char c = (char)sr.Read();
+                    if (c &gt;= &#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39;)
+                    {
+                        currInt = currInt == null ? c - &#39;0&#39; : currInt * 10 + (c - &#39;0&#39;);
+                    }
+                    else if (c == &#39;,&#39; &amp;&amp; currInt.HasValue)
+                    {
+                        if (columns == null)
+                        {
+                            columns = new int[currInt.Value][];
+                        }
+                        else
+                        {
+                            if (workingList == null)
+                            {
+                                workingList = new List&lt;int&gt;();
+                            }
+                            if (currInt.Value != 0)
+                            {
+                                workingList.Add(currInt.Value);
+                            }
+                        }
+                        currInt = null;
+                    }
+                    else if ((c == &#39;\r&#39; || c == &#39;\n&#39;) &amp;&amp; currInt.HasValue)
+                    {
+                        if (columns == null)
+                        {
+                            columns = new int[currInt.Value][];
+                        }
+                        else if (rows == null)
+                        {
+                            rows = new int[currInt.Value][];
+                        }
+                        else
+                        {
+                            if (workingList == null)
+                            {
+                                workingList = new List&lt;int&gt;();
+                            }
+                            if (currInt.Value &gt; 0) workingList.Add(currInt.Value);
+                            if (workingIndex &lt; rows.Length)
+                            {
+                                int[] arr = workingList.ToArray();
+                                if (InvalidSum(arr, columns.Length)) throw new ArgumentException(
+                                    &quot;Invalid row definition for row &quot; + (workingIndex + 1), nameof(path));
+                                rows[workingIndex] = arr;
+                            }
+                            else
+                            {
+                                int[] arr = workingList.ToArray();
+                                if (InvalidSum(arr, rows.Length)) throw new ArgumentException(
+                                    &quot;Invalid column definition for column&quot; + (workingIndex - rows.Length + 1), nameof(path));
+                                columns[workingIndex - rows.Length] = arr;
+                            }
+                            workingIndex++;
+                        }
+                        workingList = null;
+                        currInt = null;
+                    }
+                    if (columns != null &amp;&amp; rows != null &amp;&amp; workingIndex &gt;= columns.Length + rows.Length)
+                    {
+                        interrupted = true;
+                        break;
+                    }
+                }
+            }
+            // Adds the last line if there was no line break after the last relevant data.
+            if (!interrupted &amp;&amp; (workingList != null || currInt.HasValue))
+            {
+                if (workingList == null) workingList = new List&lt;int&gt;();
+                if (currInt.HasValue &amp;&amp; currInt.Value &gt; 0) workingList.Add(currInt.Value);
+                Debug.Assert(rows != null, &quot;rows != null&quot;); // At this poing parseable file would be highly invalid anyway.
+                if (workingIndex &lt; rows.Length)
+                {
+                    int[] arr = workingList.ToArray();
+                    Debug.Assert(columns != null, &quot;columns != null&quot;); // At this poing parseable file would be highly invalid anyway.
+                    if (InvalidSum(arr, columns.Length)) throw new ArgumentException(
+                        &quot;Invalid row definition for row &quot; + (workingIndex + 1), nameof(path));
+                    rows[workingIndex] = arr;
+                }
+                else
+                {
+                    int[] arr = workingList.ToArray();
+                    if (InvalidSum(arr, rows.Length)) throw new ArgumentException(
+                        &quot;Invalid column definition for column&quot; + (workingIndex - rows.Length + 1), nameof(path));
+                    Debug.Assert(columns != null, &quot;columns != null&quot;); // At this poing parseable file would be highly invalid anyway.
+                    columns[workingIndex - rows.Length] = arr;
+                }
+            }
+            if (MissingData(columns, rows)) throw new ArgumentException(
+                &quot;Too few data rows&quot;, nameof(path));
+            if (InvalidTotal(columns, rows)) throw new ArgumentException(
+                &quot;Invalid tile totals&quot;, nameof(path));
+            return new Nonogram(columns, rows);
+        }
+
+        /// &lt;summary&gt;
+        /// Generates a nonogram object based on string CSV data
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;parseable&quot;&gt;Strign data&lt;/param&gt;
+        /// &lt;returns&gt;Nonogram object&lt;/returns&gt;
+        public static Nonogram ParseFromString(string parseable)
+        {
+            int[][] rows = null;
+            int[][] columns = null;
+            int workingIndex = 0;
+            List&lt;int&gt; workingList = null;
+            int? currInt = null;
+            foreach (char c in parseable)
+            {
+                if (c &gt;= &#39;0&#39; &amp;&amp; c &lt;= &#39;9&#39;)
+                {
+                    currInt = currInt == null ? c - &#39;0&#39; : currInt * 10 + (c - &#39;0&#39;);
+                }
+                else if (c == &#39;,&#39; &amp;&amp; currInt.HasValue)
+                {
+                    if (columns == null)
+                    {
+                        columns = new int[currInt.Value][];
+                    }
+                    else
+                    {
+                        if (workingList == null)
+                        {
+                            workingList = new List&lt;int&gt;();
+                        }
+                        if (currInt.Value != 0)
+                        {
+                            workingList.Add(currInt.Value);
+                        }
+                    }
+                    currInt = null;
+                }
+                else if ((c == &#39;\r&#39; || c == &#39;\n&#39;) &amp;&amp; currInt.HasValue)
+                {
+                    if (columns == null)
+                    {
+                        columns = new int[currInt.Value][];
+                    }
+                    else if (rows == null)
+                    {
+                        rows = new int[currInt.Value][];
+                    }
+                    else 
+                    {
+                        if (workingList == null)
+                        {
+                            workingList = new List&lt;int&gt;();
+                        }
+                        if (currInt.Value &gt; 0) workingList.Add(currInt.Value);
+                        if (workingIndex &lt; rows.Length)
+                        {
+                            int[] arr = workingList.ToArray();
+                            if (InvalidSum(arr, columns.Length)) throw new ArgumentException(
+                                &quot;Invalid row definition for row &quot; + (workingIndex + 1), nameof(parseable));
+                            rows[workingIndex] = arr;
+                        }
+                        else
+                        {
+                            int[] arr = workingList.ToArray();
+                            if (InvalidSum(arr, rows.Length)) throw  new ArgumentException(
+                                &quot;Invalid column definition for column&quot; + (workingIndex - rows.Length + 1), nameof(parseable));
+                            columns[workingIndex - rows.Length] = arr;
+                        }
+                        workingIndex++;
+                    }
+                    workingList = null;
+                    currInt = null;
+                }
+                if (columns != null &amp;&amp; rows != null &amp;&amp; workingIndex &gt;= columns.Length + rows.Length)
+                {
+                    break;
+                }
+            }
+            if (MissingData(columns, rows)) throw  new ArgumentException(
+                &quot;Too few data rows&quot;, nameof(parseable));
+            if (InvalidTotal(columns, rows)) throw new ArgumentException(
+                &quot;Invalid tile totals&quot;, nameof(parseable));
+            return new Nonogram(columns, rows);
+        }
+
+        /// &lt;summary&gt;
+        /// Check for null rows or columns
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;columns&quot;&gt;Jagged array of column clues&lt;/param&gt;
+        /// &lt;param name=&quot;rows&quot;&gt;Jagged array of row clues&lt;/param&gt;
+        /// &lt;returns&gt;True if row or column data contains null arrays&lt;/returns&gt;
+        private static bool MissingData(int[][] columns, int[][] rows)
+        {
+            return columns.Any(column =&gt; column == null) || rows.Any(row =&gt; row == null);
+        }
+
+        /// &lt;summary&gt;
+        /// Checks that the total of row clues matches the total of column clues
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;columns&quot;&gt;Jagged array of column clues&lt;/param&gt;
+        /// &lt;param name=&quot;rows&quot;&gt;Jagged array of row clues&lt;/param&gt;
+        /// &lt;returns&gt;True if totals do not match&lt;/returns&gt;
+        private static bool InvalidTotal(int[][] columns, int[][] rows)
+        {
+            int cTot = columns.Sum(column =&gt; column.Sum());
+            int rTot = rows.Sum(row =&gt; row.Sum());
+            return rTot != cTot;
+        }
+
+        /// &lt;summary&gt;
+        /// Checks if the array has a total higher than possible for nonograms
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;arr&quot;&gt;Array of row or column clues.&lt;/param&gt;
+        /// &lt;param name=&quot;maxSUm&quot;&gt;Width or hight of nonogram as applicable.&lt;/param&gt;
+        /// &lt;returns&gt;True if the array contains invalid clue.&lt;/returns&gt;
+        private static bool InvalidSum(int[] arr, int maxSUm)
+        {
+            return arr.Length - 1 + arr.Sum() &gt; maxSUm;
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[21,9,21,10,0],[22,13,22,38,0],[23,13,23,33,0],[24,13,24,36,0],[25,13,25,34,0],[26,13,26,42,0],[27,13,27,33,0],[28,20,28,81,0],[29,13,29,14,0],[31,17,31,18,0],[32,21,32,46,0],[33,21,33,46,0],[34,21,34,22,0],[35,25,35,88,0],[36,21,36,22,0],[37,26,37,59,0],[38,21,38,22,0],[39,25,39,45,0],[40,25,40,26,0],[41,29,41,64,0],[42,25,42,26,0],[44,25,44,26,0],[45,29,45,53,0],[46,29,46,30,0],[47,33,47,63,0],[48,29,48,30,0],[49,29,49,52,0],[50,29,50,30,0],[51,33,51,64,0],[52,29,52,30,0],[53,25,53,26,0],[54,25,54,40,0],[55,21,55,22,0],[56,26,56,75,0],[57,21,57,22,0],[58,25,58,45,0],[59,25,59,26,0],[60,29,60,64,0],[61,25,61,26,0],[62,30,62,47,0],[63,25,63,26,0],[64,29,64,61,0],[65,25,65,26,0],[67,25,67,26,0],[68,29,68,53,0],[69,29,69,30,0],[70,33,70,63,0],[71,29,71,30,0],[72,29,72,51,0],[72,52,72,83,0],[73,29,73,60,0],[74,29,74,30,0],[75,33,75,67,0],[76,33,76,69,0],[76,70,77,107,0],[78,33,78,58,0],[79,29,79,30,0],[81,29,81,30,0],[82,33,82,67,0],[83,33,83,66,0],[83,67,84,126,0],[85,33,85,75,0],[86,29,86,30,0],[87,29,87,44,0],[88,25,88,26,0],[89,25,89,44,0],[90,25,90,40,0],[91,21,91,22,0],[92,21,92,105,0],[93,21,93,22,0],[94,25,94,44,0],[95,25,95,31,0],[97,17,97,18,0],[30,17,30,40,0],[98,13,98,14,0],[100,13,100,75,0],[101,13,101,14,0],[102,17,102,41,0],[102,42,102,72,0],[103,17,103,59,0],[103,60,103,91,0],[104,17,104,60,0],[105,17,105,48,0],[106,17,106,18,0],[107,21,107,55,0],[108,21,108,70,0],[109,21,109,57,0],[109,58,110,95,0],[111,21,111,46,0],[112,17,112,18,0],[114,17,114,18,0],[115,21,115,55,0],[116,21,116,54,0],[116,55,117,114,0],[118,21,118,70,0],[119,21,119,63,0],[120,17,120,18,0],[121,13,121,14,0],[122,13,122,44,0],[122,45,123,52,0],[124,13,124,45,0],[124,46,125,54,0],[126,13,126,48,0],[127,9,127,10,0],[169,21,169,22,0],[170,25,170,60,0],[171,21,171,22,0],[186,66,187,108,0],[193,63,194,127,0],[207,45,208,57,0],[209,46,210,59,0],[135,9,135,10,1],[136,13,136,33,1],[137,13,137,36,1],[138,13,138,34,1],[139,13,139,42,1],[140,13,140,33,1],[141,13,141,20,1],[141,32,141,41,1],[141,22,141,28,1],[142,13,142,14,1],[143,17,143,42,1],[144,17,144,18,1],[145,21,145,84,1],[146,17,146,18,1],[147,22,147,55,1],[148,17,148,18,1],[149,21,149,41,1],[150,21,150,22,1],[151,25,151,60,1],[152,21,152,22,1],[154,21,154,22,1],[155,25,155,49,1],[156,25,156,26,1],[157,29,157,59,1],[158,25,158,26,1],[159,25,159,48,1],[160,25,160,26,1],[161,29,161,60,1],[162,25,162,26,1],[163,21,163,22,1],[164,21,164,36,1],[165,17,165,18,1],[166,22,166,71,1],[167,17,167,18,1],[168,21,168,41,1],[172,26,172,43,1],[173,21,173,22,1],[174,25,174,57,1],[175,21,175,22,1],[177,21,177,22,1],[178,25,178,49,1],[179,25,179,26,1],[180,29,180,59,1],[181,25,181,26,1],[182,25,182,47,1],[182,48,182,79,1],[183,25,183,56,1],[184,25,184,26,1],[185,29,185,63,1],[186,29,186,65,1],[188,29,188,54,1],[189,25,189,26,1],[191,25,191,26,1],[192,29,192,63,1],[193,29,193,62,1],[195,29,195,71,1],[196,25,196,26,1],[197,25,197,40,1],[198,21,198,22,1],[199,21,199,40,1],[200,21,200,36,1],[201,17,201,18,1],[202,17,202,101,1],[203,17,203,18,1],[204,21,204,27,1],[206,13,206,14,1],[141,29,141,31,1],[207,13,207,44,1],[209,13,209,45,1],[211,13,211,48,1],[212,9,212,10,1],[221,9,221,10,1],[222,13,222,42,1],[222,56,222,77,1],[222,88,222,90,1],[223,9,223,10,1],[232,9,232,10,1],[233,13,233,46,1],[233,58,233,60,1],[234,13,234,40,1],[234,49,234,51,1],[235,13,235,33,1],[236,9,236,10,1],[245,9,245,10,1],[246,13,246,56,1],[247,9,247,10,1],[222,42,222,56,1],[222,77,222,88,1],[233,46,233,58,1],[234,40,234,49,1]]);
+    </script>
+  </body>
+</html>

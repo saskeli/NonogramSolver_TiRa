@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\users\saskeli\documents\visual studio 2015\projects\nonogramsolver\solverconsole\program.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using GameLib;
+using SolverLib;
+
+namespace SolverConsole
+{
+    internal class Program
+    {
+        private const string Simple = &quot;4,5\r\n4\r\n1,1\r\n1,1\r\n1,2\r\n3\r\n5\r\n1,1\r\n1,2\r\n4\r\n&quot;;
+
+        private static void Main(string[] args)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            Nonogram ng = NonoGramFactory.ParseFromString(Simple);
+            sw.Stop();
+            Console.WriteLine(&quot;Nonogram parsed in &quot; + sw.Elapsed.TotalMilliseconds + &quot;ms.&quot;);
+            TreeSolver ts = new TreeSolver();
+            ts.Run(ng);
+            Console.WriteLine(&quot;Solved with TreeSolver: &quot; + ts.Solved());
+            Console.WriteLine(&quot;TreeSolver runtime: &quot; + ts.BenchTime().TotalMilliseconds + &quot;ms&quot;);
+
+            //sw.Restart();
+            //ng = NonoGramFactory.ParseFromFile(Path.Combine(Environment.CurrentDirectory, &quot;Data/joker.txt&quot;));
+            //sw.Stop();
+            //Console.WriteLine(&quot;Nonogram parsed in &quot; + sw.Elapsed.TotalMilliseconds + &quot;ms.&quot;);
+            //ts.Run(ng);
+            //Console.WriteLine(&quot;Solved with TreeSolver: &quot; + ts.Solved());
+            //Console.WriteLine(&quot;TreeSolver runtime: &quot; + ts.BenchTime().TotalMilliseconds + &quot;ms&quot;);
+            //Console.WriteLine(ng);
+            Console.WriteLine(&quot;Any key to terminate.&quot;);
+            Console.ReadKey();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[18,9,18,10,0],[19,13,19,49,0],[20,13,20,67,0],[21,13,21,23,0],[22,13,22,93,0],[23,13,23,46,0],[24,13,24,24,0],[25,13,25,73,0],[26,13,26,97,0],[36,13,36,56,0],[37,13,37,31,0],[38,9,38,10,0]]);
+    </script>
+  </body>
+</html>
