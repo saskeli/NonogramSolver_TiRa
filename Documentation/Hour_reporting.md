@@ -14,10 +14,12 @@ Date       | time | target |
 Date       | time | target |
 -----------|------|--------|
 2016-08-06 | 10h  | Made working file/string parser. Made solver interface. Made List structure. Made a "working" nonogram solver that scales at 2<sup>n</sup>. |
+2016-08-07 | 8h   | Writing tests. Updating documentation. Generating Unit test covverage report |
 
 ##Totals
 
- Week   | Time    |
---------|---------|
- 1      | 9,5     |
-**Tot** | **9,5** |
+ Week   | Time     |
+--------|----------|
+ 1      | 9,5      |
+ 2      | 18       |
+**Tot** | **27,5** |
