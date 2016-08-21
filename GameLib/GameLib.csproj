@@ -43,6 +43,7 @@
     <Compile Include="Nonogram.cs" />
     <Compile Include="NonoGramFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using GameLib;
+using Util;
 
 namespace SolverLib
 {
@@ -8,5 +9,6 @@ namespace SolverLib
         int Run(Nonogram ng);
         bool Solved();
         TimeSpan BenchTime();
+        List<Result> Results();
     }
 }

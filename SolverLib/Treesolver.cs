@@ -12,6 +12,9 @@ namespace SolverLib
     {
         private bool _solved;
         private TimeSpan _benchTime = TimeSpan.Zero;
+        private List<Result> _resultStack = new List<Result>();
+        private bool?[][] _grid;
+        private Nonogram _ng;
 
         /// <summary>
         /// Attempt to solve the given nonogram
@@ -20,13 +23,40 @@ namespace SolverLib
         /// <returns>Number of resolved tiles</returns>
         public int Run(Nonogram ng)
         {
+            _ng = ng;
             _solved = false;
+            _grid = new bool?[ng.Height][];
+            for (int i = 0; i < ng.Height; i++)
+            {
+                _grid[i] = new bool?[ng.Width];
+                for (int j = 0; j < ng.Width; j++)
+                {
+                    if (ng.Resolved(i, j))
+                    {
+                        _grid[i][j] = ng.IsTrue(i, j);
+                    }
+                    else
+                    {
+                        _grid[i][j] = null;
+                    }
+                }
+            }
             Stopwatch sw = Stopwatch.StartNew();
-            int resolved = Treesolve(ng, 0, 0);
+            int resolved = Treesolve(0, 0);
             sw.Stop();
             _benchTime = sw.Elapsed;
             if (resolved == -1) return 0;
             _solved = true;
+            for (int i = 0; i < ng.Height; i++)
+            {
+                for (int j = 0; j < ng.Width; j++)
+                {
+                    if (!ng.Resolved(i, j) && _grid[i][j].HasValue)
+                    {
+                        _resultStack.Push(new Result(i, j, _grid[i][j].Value));
+                    }
+                }
+            }
             return resolved;
         }
 
@@ -37,34 +67,34 @@ namespace SolverLib
         /// <param name="row">Row index process</param>
         /// <param name="column">Column index to process</param>
         /// <returns>Number of resolved tiles. -1 if there was a previous error</returns>
-        private int Treesolve(Nonogram ng, int row, int column)
+        private int Treesolve(int row, int column)
         {
-            int nColumn = column + 1 < ng.Width ? column + 1 : 0;
+            int nColumn = column + 1 < _ng.Width ? column + 1 : 0;
             int nRow = nColumn == 0 ? row + 1 : row;
-            if (!ng.Resolved(row, column))
+            if (!_grid[row][column].HasValue)
             {
-                ng.Set(row, column, true);
-                if (!Error(ng, row, column))
+                _grid[row][column] = true;
+                if (!Error(row, column))
                 {
-                    int res = nRow < ng.Height ? Treesolve(ng, nRow, nColumn) : 0;
+                    int res = nRow < _ng.Height ? Treesolve(nRow, nColumn) : 0;
                     if (res >= 0)
                     {
                         return res + 1;
                     }
                 }
-                ng.Set(row, column, false);
-                if (!Error(ng, row, column))
+                _grid[row][column] = false;
+                if (!Error(row, column))
                 {
-                    int res = nRow < ng.Height ? Treesolve(ng, nRow, nColumn) : 0;
+                    int res = nRow < _ng.Height ? Treesolve(nRow, nColumn) : 0;
                     if (res >= 0)
                     {
                         return res + 1;
                     }
                 }
-                ng.Clear(row, column);
+                _grid[row][column] = null;
                 return -1;
             }
-            return nRow < ng.Height ? Treesolve(ng, nRow, nColumn) : 0;
+            return nRow < _ng.Height ? Treesolve(nRow, nColumn) : 0;
         }
 
         /// <summary>
@@ -74,27 +104,27 @@ namespace SolverLib
         /// <param name="row">Row index of tile</param>
         /// <param name="column">Column index of tile</param>
         /// <returns>True if error was found.</returns>
-        private bool Error(Nonogram ng, int row, int column)
+        private bool Error(int row, int column)
         {
-            int lineSum = ng.RowSum(row);
-            for (int i = 0; i < ng.Width; i++)
+            int lineSum = _ng.RowSum(row);
+            for (int i = 0; i < _ng.Width; i++)
             {
-                if (ng.IsTrue(row, i)) lineSum--;
+                if (_grid[row][i].HasValue && _grid[row][i].Value) lineSum--;
                 if (lineSum < 0) return true;
             }
-            lineSum = ng.ColumnSum(column);
-            for (int i = 0; i < ng.Height; i++)
+            lineSum = _ng.ColumnSum(column);
+            for (int i = 0; i < _ng.Height; i++)
             {
-                if (ng.IsTrue(i, column)) lineSum--;
+                if (_grid[i][column].HasValue && _grid[i][column].Value) lineSum--;
                 if (lineSum < 0) return true;
             }
-            if (column == ng.Width - 1)
+            if (column == _ng.Width - 1)
             {
                 int num = 0;
                 List<int> nums = new List<int>();
-                for (int i = 0; i < ng.Width; i++)
+                for (int i = 0; i < _ng.Width; i++)
                 {
-                    if (ng.IsTrue(row, i))
+                    if (_grid[row][i].HasValue && _grid[row][i].Value)
                     {
                         num++;
                     }
@@ -107,21 +137,21 @@ namespace SolverLib
                 if (num != 0) nums.Add(num);
                 for (int i = 0; i < nums.Count; i++)
                 {
-                    if (nums[i] != ng.GetRowNum(row, i)) return true;
+                    if (nums[i] != _ng.GetRowNum(row, i)) return true;
                 }
-                if (ng.GetRowNum(row, nums.Count) != 0) return true;
+                if (_ng.GetRowNum(row, nums.Count) != 0) return true;
             }
-            if (row == ng.Height - 1)
+            if (row == _ng.Height - 1)
             {
                 int num = 0;
                 List<int> nums = new List<int>();
-                for (int i = 0; i < ng.Height; i++)
+                for (int i = 0; i < _ng.Height; i++)
                 {
-                    if (ng.IsTrue(i, column))
+                    if (_grid[i][column].HasValue && _grid[i][column].Value)
                     {
                         num++;
                     }
-                    else 
+                    else
                     {
                         if (num != 0) nums.Add(num);
                         num = 0;
@@ -130,9 +160,9 @@ namespace SolverLib
                 if (num != 0) nums.Add(num);
                 for (int i = 0; i < nums.Count; i++)
                 {
-                    if (nums[i] != ng.GetColumnNum(column, i)) return true;
+                    if (nums[i] != _ng.GetColumnNum(column, i)) return true;
                 }
-                if (ng.GetColumnNum(column, nums.Count) != 0) return true;
+                if (_ng.GetColumnNum(column, nums.Count) != 0) return true;
             }
             return false;
         }
@@ -153,6 +183,15 @@ namespace SolverLib
         public TimeSpan BenchTime()
         {
             return _benchTime;
+        }
+
+        /// <summary>
+        /// Returns a list of tiles resolved by the solver.
+        /// </summary>
+        /// <returns>List of resolved tile data.</returns>
+        public List<Result> Results()
+        {
+            return _resultStack;
         }
     }
 }

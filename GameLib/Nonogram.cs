@@ -194,5 +194,15 @@ namespace GameLib
         {
             return _columnNumbers[column].Sum();
         }
+
+        /// <summary>
+        /// Gets clue array for given row
+        /// </summary>
+        /// <param name="row">index of row</param>
+        /// <returns>Clue array</returns>
+        public int[] GetRowArray(int row)
+        {
+            return row < _rowNumbers.Length ? _rowNumbers[row] : new int[0];
+        }
     }
 }
