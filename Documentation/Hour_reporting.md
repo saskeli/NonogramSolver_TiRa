@@ -23,6 +23,15 @@ Date       | time | target |
 2016-08-08 | 2h   | Research |
 2016-08-09 | 2h   | More research |
 
+##Week 4
+
+Date       | time | target |
+-----------|------|--------|
+2016-08-16 | 4h   | Research |
+2016-08-18 | 4h   | Research |
+2016-08-19 | 3h   | Data structures |
+2016-08-21 | 4h   | Solver coding, documentation |
+
 ##Totals
 
  Week   | Time     |
@@ -30,4 +39,5 @@ Date       | time | target |
  1      | 9,5      |
  2      | 18       |
  3      | 4        |
-**Tot** | **31,5** |
+ 4      | 15
+**Tot** | **46,5** |
