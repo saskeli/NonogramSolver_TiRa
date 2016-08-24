@@ -43,6 +43,7 @@
     <Compile Include="InitSolver.cs" />
     <Compile Include="ISolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerialSolver.cs" />
     <Compile Include="Treesolver.cs" />
   </ItemGroup>
   <ItemGroup>

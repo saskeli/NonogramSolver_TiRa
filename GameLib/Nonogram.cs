@@ -12,6 +12,7 @@ namespace GameLib
         private readonly Tile[][] _tiles;
         private readonly int[][] _columnNumbers;
         private readonly int[][] _rowNumbers;
+
         /// <summary>
         /// Number of rows in the nonogram.
         /// </summary>
@@ -50,6 +51,11 @@ namespace GameLib
             }
             _columnNumbers = columns;
             _rowNumbers = rows;
+        }
+
+        private Nonogram(int[][] columns, int[][] rows, Tile[][] ts) : this(columns, rows)
+        {
+            _tiles = ts;
         }
 
         /// <summary>
@@ -203,6 +209,52 @@ namespace GameLib
         public int[] GetRowArray(int row)
         {
             return row < _rowNumbers.Length ? _rowNumbers[row] : new int[0];
+        }
+
+        /// <summary>
+        /// Gets clue array for given column
+        /// </summary>
+        /// <param name="column">Index of column</param>
+        /// <returns>Clue array</returns>
+        public int[] GetColumnArray(int column)
+        {
+            return column < _columnNumbers.Length ? _columnNumbers[column] : new int[0];
+        }
+
+        /// <summary>
+        /// Creates a new copy of the nonogram
+        /// </summary>
+        /// <returns>A new nonogram with the same values</returns>
+        public Nonogram Copy()
+        {
+            int[][] cNums = new int[_columnNumbers.Length][];
+            int[][] rNums = new int[_rowNumbers.Length][];
+            Tile[][] ts = new Tile[_tiles.Length][];
+            for (int i = 0; i < _columnNumbers.Length; i++)
+            {
+                cNums[i] = new int[_columnNumbers[i].Length];
+                for (int j = 0; j < _columnNumbers[i].Length; j++)
+                {
+                    cNums[i][j] = _columnNumbers[i][j];
+                }
+            }
+            for (int i = 0; i < _rowNumbers.Length; i++)
+            {
+                rNums[i] = new int[_rowNumbers[i].Length];
+                for (int j = 0; j < _rowNumbers[i].Length; j++)
+                {
+                    rNums[i][j] = _rowNumbers[i][j];
+                }
+            }
+            for (int i = 0; i < _tiles.Length; i++)
+            {
+                ts[i] = new Tile[_tiles[i].Length];
+                for (int j = 0; j < _tiles[i].Length; j++)
+                {
+                    ts[i][j] = _tiles[i][j].Copy();
+                }
+            }
+            return new Nonogram(cNums, rNums, ts);
         }
     }
 }

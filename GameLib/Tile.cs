@@ -17,12 +17,23 @@ namespace GameLib
         internal bool? State = null;
 
         /// <summary>
-        /// Tile constructore
+        /// Tile constructor
         /// </summary>
         /// <param name="prio">Initial tile priority</param>
         public Tile(int prio)
         {
             Priority = prio;
+        }
+
+        /// <summary>
+        /// Tile constructor
+        /// </summary>
+        /// <param name="prio">Initial tile priority</param>
+        /// <param name="state">State of tile</param>
+        private Tile(int prio, bool? state)
+        {
+            Priority = prio;
+            State = state;
         }
 
         /// <summary>
@@ -46,6 +57,15 @@ namespace GameLib
         public int CompareTo(Tile other)
         {
             return Priority - other.Priority;
+        }
+
+        /// <summary>
+        /// Returns a new copy of the tile
+        /// </summary>
+        /// <returns>A new tile with the same values</returns>
+        public Tile Copy()
+        {
+            return new Tile(Priority, State);
         }
     }
 }

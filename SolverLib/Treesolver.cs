@@ -24,6 +24,7 @@ namespace SolverLib
         public int Run(Nonogram ng)
         {
             _ng = ng;
+            _resultStack = new List<Result>();
             _solved = false;
             _grid = new bool?[ng.Height][];
             for (int i = 0; i < ng.Height; i++)
