@@ -10,7 +10,7 @@ namespace SolverLib
     public class SerialSolver : ISolver
     {
         private bool _solved;
-        private TimeSpan _benchTime = TimeSpan.Zero;;
+        private TimeSpan _benchTime = TimeSpan.Zero;
         private List<Result> _results = new List<Result>();
         private Nonogram _ng = null;
 
@@ -38,7 +38,7 @@ namespace SolverLib
         {
             while (!resQueue.IsEmpty)
             {
-                Result res = resQueue.Poll();
+                Result res = resQueue.Dequeue();
                 _ng.Set(res.Row, res.Column, res.State);
                 _results.Push(res);
             }
@@ -51,7 +51,7 @@ namespace SolverLib
 
         public TimeSpan BenchTime()
         {
-            return BenchTime();
+            return _benchTime;
         }
 
         public List<Result> Results()

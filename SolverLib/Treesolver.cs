@@ -64,7 +64,6 @@ namespace SolverLib
         /// <summary>
         /// Recursive gamtree for nonotgrams
         /// </summary>
-        /// <param name="ng">Nonogram to solve</param>
         /// <param name="row">Row index process</param>
         /// <param name="column">Column index to process</param>
         /// <returns>Number of resolved tiles. -1 if there was a previous error</returns>
@@ -101,7 +100,6 @@ namespace SolverLib
         /// <summary>
         /// Checks nonogram for obvious errors related to specified tile.
         /// </summary>
-        /// <param name="ng">Nonogram to check</param>
         /// <param name="row">Row index of tile</param>
         /// <param name="column">Column index of tile</param>
         /// <returns>True if error was found.</returns>

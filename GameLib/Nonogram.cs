@@ -67,17 +67,8 @@ namespace GameLib
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < Height; i++)
             {
-                sb.Append(RowString(i));
-                sb.Append("| ");
-                sb.AppendLine(RowsNumString(i));
+                sb.AppendLine(RowString(i));
             }
-            sb.AppendLine("Columndata:");
-            for (int i = 0; i < Width; i++)
-            {
-                sb.Append("c" + i + ": ");
-                sb.AppendLine(ColumnNumString(i));
-            }
-
             return sb.ToString();
         }
 

@@ -58,6 +58,10 @@
       <Project>{da4028c1-aec0-46b0-95fa-700a8ccb23f5}</Project>
       <Name>SolverLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{4CFCBAB4-3B8E-4611-83CF-00EF21741754}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\joker.txt">

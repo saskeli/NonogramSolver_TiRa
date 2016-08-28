@@ -116,11 +116,11 @@ namespace Util.Tests
             st.Push(12);
             Assert.IsFalse(st.IsEmpty, "st.IsEmpty should return false but returns true");
             Assert.AreEqual(2, st.Count, "st.Count should return 1 but returns " + st.Count);
-            Assert.AreEqual(12l, st.Peek(), "st.Peek should return 12 but returns " + st.Peek());
+            Assert.AreEqual(12L, st.Peek(), "st.Peek should return 12 but returns " + st.Peek());
             long r = st.Pop();
-            Assert.AreEqual(12l, r, "st.Pop() should return 12 but returned " + r);
+            Assert.AreEqual(12L, r, "st.Pop() should return 12 but returned " + r);
             Assert.AreEqual(1, st.Count, "st.Count should return 1 but returns " + st.Count);
-            Assert.AreEqual(8l, st.Peek(), "st.Peek should return 12 but returns " + st.Peek());
+            Assert.AreEqual(8L, st.Peek(), "st.Peek should return 12 but returns " + st.Peek());
         }
 
         [TestMethod()]

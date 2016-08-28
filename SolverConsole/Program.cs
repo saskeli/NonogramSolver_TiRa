@@ -17,22 +17,21 @@ namespace SolverConsole
         private static void Main(string[] args)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            Nonogram ng = NonoGramFactory.ParseFromString(Simple);
+            // Nonogram ng = NonoGramFactory.ParseFromString(Simple);
+            Nonogram ng = NonoGramFactory.ParseFromFile(Path.Combine(Environment.CurrentDirectory, "Data/joker.txt"));
             sw.Stop();
             Console.WriteLine("Nonogram parsed in " + sw.Elapsed.TotalMilliseconds + "ms.");
-            TreeSolver ts = new TreeSolver();
-            ts.Run(ng);
-            Console.WriteLine("Solved with TreeSolver: " + ts.Solved());
-            Console.WriteLine("TreeSolver runtime: " + ts.BenchTime().TotalMilliseconds + "ms");
+            ISolver sol = new InitSolver();
+            sol.Run(ng);
+            Console.WriteLine("Solved: " + sol.Solved());
+            Console.WriteLine("Runtime: " + sol.BenchTime().TotalMilliseconds + "ms.");
+            while (!sol.Results().IsEmpty)
+            {
+                Result res = sol.Results().Dequeue();
+                ng.Set(res.Row, res.Column, res.State);
+            }
+            Console.WriteLine(ng);
 
-            //sw.Restart();
-            //ng = NonoGramFactory.ParseFromFile(Path.Combine(Environment.CurrentDirectory, "Data/joker.txt"));
-            //sw.Stop();
-            //Console.WriteLine("Nonogram parsed in " + sw.Elapsed.TotalMilliseconds + "ms.");
-            //ts.Run(ng);
-            //Console.WriteLine("Solved with TreeSolver: " + ts.Solved());
-            //Console.WriteLine("TreeSolver runtime: " + ts.BenchTime().TotalMilliseconds + "ms");
-            //Console.WriteLine(ng);
             Console.WriteLine("Any key to terminate.");
             Console.ReadKey();
         }
