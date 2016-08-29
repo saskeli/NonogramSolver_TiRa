@@ -20,10 +20,6 @@ namespace SolverConsole
             TimeSpan ts;
             foreach (string file in Directory.GetFiles(Regex.Replace(Environment.CurrentDirectory, "NonogramSolver.*", @"NonogramSolver\\Data")))
             {
-                if (file.EndsWith("cherries.txt"))
-                {
-                    continue;
-                }
                 Console.WriteLine("Benchmarking file: " + Path.GetFileName(file));
                 Nonogram ng = NonoGramFactory.ParseFromFile(file);
                 ISolver serialSolver = new SerialSolver();
@@ -37,7 +33,7 @@ namespace SolverConsole
                         serialSolver.Run(ng);
                         ts = ts.Add(serialSolver.BenchTime());
                     }
-                    Console.WriteLine("Average solving time: " + (ts.TotalMilliseconds / 1000));
+                    Console.WriteLine("Average solving time: " + (ts.TotalMilliseconds / 1000) + "ms");
                 }
                 ISolver treeSolver = new TreeSolver();
                 treeSolver.Run(ng);
@@ -45,12 +41,12 @@ namespace SolverConsole
                 if (treeSolver.Solved())
                 {
                     ts = TimeSpan.Zero;
-                    for (int i = 0; i < 1000; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         treeSolver.Run(ng);
                         ts = ts.Add(treeSolver.BenchTime());
                     }
-                    Console.WriteLine("Average solving time: " + (ts.TotalMilliseconds / 1000));
+                    Console.WriteLine("Average solving time: " + (ts.TotalMilliseconds / 10) + "ms");
                 }
             }
 
