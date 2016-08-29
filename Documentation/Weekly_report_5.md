@@ -25,6 +25,8 @@ The treesolver is totally impractical even for these.
 
 The [Cherries](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Data/cherries.txt) nonogram is missing from the benchmark since the Treesolver would take days to generate meaningfull benchmark results.
 
+Memory use of the solvers is trivial on modern computers.
+
 ##Problems
 
 Who knew designing algorithms for solving NP complete problems was hard?
