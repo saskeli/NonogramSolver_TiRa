@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GameLib;
 using SolverLib;
@@ -16,21 +17,42 @@ namespace SolverConsole
 
         private static void Main(string[] args)
         {
-            Stopwatch sw = Stopwatch.StartNew();
-            // Nonogram ng = NonoGramFactory.ParseFromString(Simple);
-            Nonogram ng = NonoGramFactory.ParseFromFile(Path.Combine(Environment.CurrentDirectory, "Data/joker.txt"));
-            sw.Stop();
-            Console.WriteLine("Nonogram parsed in " + sw.Elapsed.TotalMilliseconds + "ms.");
-            ISolver sol = new InitSolver();
-            sol.Run(ng);
-            Console.WriteLine("Solved: " + sol.Solved());
-            Console.WriteLine("Runtime: " + sol.BenchTime().TotalMilliseconds + "ms.");
-            while (!sol.Results().IsEmpty)
+            TimeSpan ts;
+            foreach (string file in Directory.GetFiles(Regex.Replace(Environment.CurrentDirectory, "NonogramSolver.*", @"NonogramSolver\\Data")))
             {
-                Result res = sol.Results().Dequeue();
-                ng.Set(res.Row, res.Column, res.State);
+                if (file.EndsWith("cherries.txt"))
+                {
+                    continue;
+                }
+                Console.WriteLine("Benchmarking file: " + Path.GetFileName(file));
+                Nonogram ng = NonoGramFactory.ParseFromFile(file);
+                ISolver serialSolver = new SerialSolver();
+                serialSolver.Run(ng);
+                Console.WriteLine("Solvable with SerialSolver: " + serialSolver.Solved());
+                if (serialSolver.Solved())
+                {
+                    ts = TimeSpan.Zero;
+                    for (int i = 0; i < 1000; i++)
+                    {
+                        serialSolver.Run(ng);
+                        ts = ts.Add(serialSolver.BenchTime());
+                    }
+                    Console.WriteLine("Average solving time: " + (ts.TotalMilliseconds / 1000));
+                }
+                ISolver treeSolver = new TreeSolver();
+                treeSolver.Run(ng);
+                Console.WriteLine("Solvable with TreeSolver: " + serialSolver.Solved());
+                if (treeSolver.Solved())
+                {
+                    ts = TimeSpan.Zero;
+                    for (int i = 0; i < 1000; i++)
+                    {
+                        treeSolver.Run(ng);
+                        ts = ts.Add(treeSolver.BenchTime());
+                    }
+                    Console.WriteLine("Average solving time: " + (ts.TotalMilliseconds / 1000));
+                }
             }
-            Console.WriteLine(ng);
 
             Console.WriteLine("Any key to terminate.");
             Console.ReadKey();
