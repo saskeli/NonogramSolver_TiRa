@@ -32,6 +32,14 @@ Date       | time | target |
 2016-08-19 | 3h   | Data structures |
 2016-08-21 | 4h   | Solver coding, documentation |
 
+##Week 4
+
+Date       | time | target |
+-----------|------|--------|
+2016-08-27 | 3h   | Solver coding |
+2016-08-28 | 3h   | Solver coding |
+2016-08-29 | 3h   | Benchmarking and documentation |
+
 ##Totals
 
  Week   | Time     |
@@ -39,5 +47,6 @@ Date       | time | target |
  1      | 9,5      |
  2      | 18       |
  3      | 4        |
- 4      | 15
-**Tot** | **46,5** |
+ 4      | 15       |
+ 5      | 9       |
+**Tot** | **55,5** |
