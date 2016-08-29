@@ -1,4 +1,4 @@
-#Week 2
+#Week 4
 
 [Hour reporting](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Hour_reporting.md)
 
