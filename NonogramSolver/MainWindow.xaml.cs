@@ -15,9 +15,9 @@ namespace NonogramSolver
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BackgroundWorker _solveBW = new BackgroundWorker();
-        private BackgroundWorker _fillBW = new BackgroundWorker();
-        private int _waitTime = 150;
+        private readonly BackgroundWorker _solveBW = new BackgroundWorker();
+        private readonly BackgroundWorker _fillBW = new BackgroundWorker();
+        private int _waitTime = 100;
         private bool _running = false;
         private List<Result> _resultQueue;
         public MainWindow()
