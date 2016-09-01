@@ -95,6 +95,20 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameLib\GameLib.csproj">
+      <Project>{0D6326C5-90D0-43C2-A159-DFDA4CBD034C}</Project>
+      <Name>GameLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolverLib\SolverLib.csproj">
+      <Project>{DA4028C1-AEC0-46B0-95FA-700A8CCB23F5}</Project>
+      <Name>SolverLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{4CFCBAB4-3B8E-4611-83CF-00EF21741754}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

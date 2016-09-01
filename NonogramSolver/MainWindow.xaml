@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NonogramSolver"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Nonogram Solver" MinHeight="150" MinWidth="150" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
+        PreviewDragEnter="Grid_PreviewDrag" PreviewDragOver="Grid_PreviewDrag" Drop="Grid_Drop">
+    <StackPanel Drop="Grid_Drop" PreviewDragEnter="Grid_PreviewDrag" PreviewDragOver="Grid_PreviewDrag">
+        <TextBox x:Name="stateBox" IsReadOnly="True" PreviewDrop="Grid_Drop" Margin="5" />
+        <Grid x:Name="wGrid" MinWidth="100" MinHeight="100" Width="auto" Height="auto" Background="Red" 
+              Drop="Grid_Drop" PreviewDragEnter="Grid_PreviewDrag" PreviewDragOver="Grid_PreviewDrag">
+        </Grid>
+    </StackPanel>
+    
 </Window>
