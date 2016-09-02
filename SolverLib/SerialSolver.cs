@@ -28,7 +28,7 @@ namespace SolverLib
             }
             _benchTime = _benchTime.Add(s.BenchTime());
             s = new LineSolver();
-            if (s.Run(_ng) >= -1)
+            if (s.Run(_ng) > 0)
             {
                 Update(s.Results());
                 _solved = s.Solved();
