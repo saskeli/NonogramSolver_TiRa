@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameLib;
 using Util;
+using System.Windows;
 
 namespace SolverLib
 {
@@ -26,6 +27,12 @@ namespace SolverLib
                 Update(s.Results());
             }
             _benchTime = _benchTime.Add(s.BenchTime());
+            s = new LineSolver();
+            if (s.Run(_ng) >= -1)
+            {
+                Update(s.Results());
+                _solved = s.Solved();
+            }
             s = new TreeSolver();
             s.Run(_ng);
             _solved = true;

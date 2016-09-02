@@ -17,7 +17,7 @@ namespace NonogramSolver
     {
         private readonly BackgroundWorker _solveBW = new BackgroundWorker();
         private readonly BackgroundWorker _fillBW = new BackgroundWorker();
-        private int _waitTime = 100;
+        private const int WAITTIME = 100;
         private bool _running = false;
         private List<Result> _resultQueue;
         public MainWindow()
@@ -83,7 +83,6 @@ namespace NonogramSolver
                 _resultQueue = solver.Results();
                 _fillBW.RunWorkerAsync(_resultQueue.Count);
             }
-            
         }
 
         private void _fillBW_DoWork(object sender, DoWorkEventArgs e)
@@ -92,7 +91,7 @@ namespace NonogramSolver
             for (int i = 0; i < resLen; i++)
             {
                 _fillBW.ReportProgress(i);
-                Thread.Sleep(_waitTime);
+                Thread.Sleep(WAITTIME);
             }
         }
 

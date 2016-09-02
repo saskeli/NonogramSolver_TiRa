@@ -151,6 +151,17 @@ namespace GameLib
         }
 
         /// <summary>
+        /// Checks if the specified tile has been set to false
+        /// </summary>
+        /// <param name="row">Row index</param>
+        /// <param name="column">column index</param>
+        /// <returns>True if tile is set to false, false if set to true or not set.</returns>
+        public bool IsFalse(int row, int column)
+        {
+            return _tiles[row][column].State.HasValue && !_tiles[row][column].State.Value;
+        }
+
+        /// <summary>
         /// Gets one clue number for one row.
         /// </summary>
         /// <param name="row">Row index</param>
@@ -158,6 +169,7 @@ namespace GameLib
         /// <returns>Specified clue int</returns>
         public int GetRowNum(int row, int idx)
         {
+            if (idx < 0) return 0;
             return idx < _rowNumbers[row].Length ? _rowNumbers[row][idx] : 0;
         }
 
@@ -169,6 +181,7 @@ namespace GameLib
         /// <returns></returns>
         public int GetColumnNum(int column, int idx)
         {
+            if (idx < 0) return 0;
             return idx < _columnNumbers[column].Length ? _columnNumbers[column][idx] : 0;
         }
 

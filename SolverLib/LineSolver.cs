@@ -109,12 +109,96 @@ namespace SolverLib
 
         private bool ColLeft(int column, int[] leftInts, int clueIndex, int colPos)
         {
-            throw new NotImplementedException();
+            int clue = _ng.GetColumnNum(column, clueIndex);
+            if (clue == 0)
+            {
+                for (int i = colPos; i < _ng.Height; i++)
+                {
+                    if (_ng.IsTrue(i, column)) return false;
+                    leftInts[i] = clueIndex * 2 - 1;
+                }
+                return true;
+            }
+            int localPos = colPos;
+            bool posChanged = false;
+            while (true)
+            {
+                posChanged = false;
+                for (int i = localPos; i < localPos + clue; i++)
+                {
+                    if (i >= leftInts.Length) return false;
+                    if (_ng.IsFalse(i, column))
+                    {
+                        for (int j = localPos; j <= i; j++)
+                        {
+                            if (_ng.IsTrue(j, column)) return false;
+                            leftInts[j] = clueIndex * 2 - 1;
+                        }
+                        localPos = i + 1;
+                        posChanged = true;
+                        break;
+                    }
+                    leftInts[i] = clueIndex * 2;
+                }
+                if (posChanged) continue;
+                if (localPos + clue >= leftInts.Length) return true;
+                if (ColLeft(column, leftInts, clueIndex + 1, localPos + clue))
+                {
+                    return true;
+                }
+                else
+                {
+                    leftInts[localPos] = clueIndex * 2 - 1;
+                    localPos++;
+                }
+            }
         }
 
         private bool ColRight(int column, int[] rightInts, int clueIndex, int colPos)
         {
-            throw new NotImplementedException();
+            int clue = _ng.GetColumnNum(column, clueIndex);
+            if (clue == 0)
+            {
+                for (int i = colPos; i >= 0; i--)
+                {
+                    if (_ng.IsTrue(i, column)) return false;
+                    rightInts[i] = -1;
+                }
+                return true;
+            }
+            int localPos = colPos;
+            bool posChanged = false;
+            while (true)
+            {
+                posChanged = false;
+                for (int i = localPos; i > localPos - clue; i--)
+                {
+                    if (i < 0) return false;
+                    if (_ng.IsFalse(i, column))
+                    {
+                        for (int j = localPos; j >= i; j--)
+                        {
+                            if (_ng.IsTrue(j, column)) return false;
+                            rightInts[j] = clueIndex * 2 - 1;
+                        }
+                        localPos = i - 1;
+                        posChanged = true;
+                        break;
+                    }
+                    rightInts[i] = clueIndex * 2;
+                }
+                if (posChanged) continue;
+                if (localPos - clue < 0) return true;
+                if (ColRight(column, rightInts, clueIndex - 1, localPos - clue))
+                {
+                    return true;
+                }
+                else
+                {
+                    rightInts[localPos] = clueIndex * 2 + 1;
+                    localPos--;
+                }
+            }
         }
 
         private bool FillRow(int index)
@@ -122,7 +206,11 @@ namespace SolverLib
             bool solved = true;
             for (int i = 0; i < _ng.Width; i++)
             {
-                if (!_ng.Resolved(index, i)) solved = false;
+                if (!_ng.Resolved(index, i))
+                {
+                    solved = false;
+                    break;
+                }
             }
             if (solved) return true;
             int[] leftInts = new int[_ng.Width];
@@ -147,12 +235,96 @@ namespace SolverLib
 
         private bool RowLeft(int row, int[] leftInts, int clueIndex, int rowPos)
         {
-            throw new NotImplementedException();
+            int clue = _ng.GetRowNum(row, clueIndex);
+            if (clue == 0)
+            {
+                for (int i = rowPos; i < leftInts.Length; i++)
+                {
+                    if (_ng.IsTrue(row, i)) return false;
+                    leftInts[i] = clueIndex * 2 - 1;
+                }
+                return true;
+            }
+            int localPos = rowPos;
+            bool posChanged = false;
+            while (true)
+            {
+                posChanged = false;
+                for (int i = localPos; i < localPos + clue; i++)
+                {
+                    if (i >= leftInts.Length) return false;
+                    if (_ng.IsFalse(row, i))
+                    {
+                        for (int j = localPos; j <= i; j++)
+                        {
+                            if (_ng.IsTrue(row, j)) return false;
+                            leftInts[j] = clueIndex * 2 - 1;
+                        }
+                        localPos = i + 1;
+                        posChanged = true;
+                        break;
+                    }
+                    leftInts[i] = clueIndex * 2;
+                }
+                if (posChanged) continue;
+                if (localPos + clue >= leftInts.Length) return true;
+                if (ColLeft(row, leftInts, clueIndex + 1, localPos + clue))
+                {
+                    return true;
+                }
+                else
+                {
+                    leftInts[localPos] = clueIndex * 2 - 1;
+                    localPos++;
+                }
+            }
         }
 
         private bool RowRight(int row, int[] rightInts, int clueIndex, int rowPos)
         {
-            throw new NotImplementedException();
+            int clue = _ng.GetRowNum(row, clueIndex);
+            if (clue == 0)
+            {
+                for (int i = rowPos; i >= 0; i--)
+                {
+                    if (_ng.IsTrue(row, i)) return false;
+                    rightInts[i] = -1;
+                }
+                return true;
+            }
+            int localPos = rowPos;
+            bool posChanged = false;
+            while (true)
+            {
+                posChanged = false;
+                for (int i = localPos; i > localPos - clue; i--)
+                {
+                    if (i < 0) return false;
+                    if (_ng.IsFalse(row, i))
+                    {
+                        for (int j = localPos; j >= i; j--)
+                        {
+                            if (_ng.IsTrue(row, j)) return false;
+                            rightInts[j] = clueIndex * 2 - 1;
+                        }
+                        localPos = i - 1;
+                        posChanged = true;
+                        break;
+                    }
+                    rightInts[i] = clueIndex * 2;
+                }
+                if (posChanged) continue;
+                if (localPos - clue < 0) return true;
+                if (ColRight(row, rightInts, clueIndex - 1, localPos - clue))
+                {
+                    return true;
+                }
+                else
+                {
+                    rightInts[localPos] = clueIndex * 2 + 1;
+                    localPos--;
+                }
+            }
         }
 
         public bool Solved()
