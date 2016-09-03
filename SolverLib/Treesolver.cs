@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using GameLib;
 using Util;
 
@@ -117,7 +118,7 @@ namespace SolverLib
                 if (_grid[i][column].HasValue && _grid[i][column].Value) lineSum--;
                 if (lineSum < 0) return true;
             }
-            if (column == _ng.Width - 1)
+            if (_grid[row].All(x => x.HasValue))
             {
                 int num = 0;
                 List<int> nums = new List<int>();
@@ -140,7 +141,7 @@ namespace SolverLib
                 }
                 if (_ng.GetRowNum(row, nums.Count) != 0) return true;
             }
-            if (row == _ng.Height - 1)
+            if (_grid.All(x => x[column].HasValue))
             {
                 int num = 0;
                 List<int> nums = new List<int>();

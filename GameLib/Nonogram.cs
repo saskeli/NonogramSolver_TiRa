@@ -260,5 +260,15 @@ namespace GameLib
             }
             return new Nonogram(cNums, rNums, ts);
         }
+
+        public bool FullRow(int row)
+        {
+            return _tiles[row].All(x => x.State.HasValue);
+        }
+
+        public bool FullColumn(int column)
+        {
+            return _tiles.All(x => x[column].State.HasValue);
+        }
     }
 }

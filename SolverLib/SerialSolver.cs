@@ -35,9 +35,9 @@ namespace SolverLib
             }
             s = new TreeSolver();
             s.Run(_ng);
-            _solved = true;
             _benchTime = _benchTime.Add(s.BenchTime());
             Update(s.Results());
+            _solved = true;
             return _results.Count;
         }
 
