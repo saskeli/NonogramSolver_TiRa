@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows.Controls.Primitives;
 using GameLib;
 using Util;
 
 namespace SolverLib
 {
+    /// <summary>
+    /// Solver that serially runs line operations to try solving a nonogram.
+    /// </summary>
     public class LineSolver : ISolver
     {
         private Nonogram _ng;
@@ -16,6 +18,11 @@ namespace SolverLib
         private bool[] _rowChanged;
         private bool[] _colChanged;
 
+        /// <summary>
+        /// Runs the solver. Initially evaluates every row/column.
+        /// </summary>
+        /// <param name="ng">Nonogram to solve</param>
+        /// <returns>Number of solved tiles or -1 if a contradiction was encountered</returns>
         public int Run(Nonogram ng)
         {
             bool[] r = new bool[ng.Height];
@@ -31,6 +38,13 @@ namespace SolverLib
             return Run(ng, r, c);
         }
 
+        /// <summary>
+        /// Runs the solver. Initially evaluates rows/columns specified by arrays.
+        /// </summary>
+        /// <param name="ng">Nonogram to solve</param>
+        /// <param name="rowsToStart">True indcates that row should be evaluated. Array.Length needs to be Nonogram.Height</param>
+        /// <param name="columnsToStart">True indicates that column should be evaluated. Array.Length needs to be Nonogram.Width</param>
+        /// <returns>Number of solved tiles or -1 if a contradiction was encountered</returns>
         public int Run(Nonogram ng, bool[] rowsToStart, bool[] columnsToStart)
         {
             _ng = ng.Copy();
@@ -74,6 +88,11 @@ namespace SolverLib
             return _resultList.Count;
         }
 
+        /// <summary>
+        /// Evaluates the specified column
+        /// </summary>
+        /// <param name="index">column index</param>
+        /// <returns>False if a contradiction is encountered</returns>
         private bool FillColumn(int index)
         {
             bool solved = true;
@@ -107,6 +126,14 @@ namespace SolverLib
             return true;
         }
 
+        /// <summary>
+        /// Fills the leftInts array with all blocks as far up as possible
+        /// </summary>
+        /// <param name="column">column index</param>
+        /// <param name="leftInts">array to edit</param>
+        /// <param name="clueIndex">clue to use for this step in recursion</param>
+        /// <param name="colPos">current fill position of array. (used for recursion)</param>
+        /// <returns>false if a contradiction is encountered</returns>
         private bool ColLeft(int column, int[] leftInts, int clueIndex, int colPos)
         {
             int clue = _ng.GetColumnNum(column, clueIndex);
@@ -159,6 +186,14 @@ namespace SolverLib
             }
         }
 
+        /// <summary>
+        /// Fills the rightInts array with all blocks as far down as possible
+        /// </summary>
+        /// <param name="column">column index</param>
+        /// <param name="rightInts">array to edit</param>
+        /// <param name="clueIndex">clue to use for this step in recursion</param>
+        /// <param name="colPos">current fill position of array. (used for recursion)</param>
+        /// <returns>false if a contradiction is encountered</returns>
         private bool ColRight(int column, int[] rightInts, int clueIndex, int colPos)
         {
             int clue = _ng.GetColumnNum(column, clueIndex);
@@ -211,6 +246,11 @@ namespace SolverLib
             }
         }
 
+        /// <summary>
+        /// Evaluates the specified row
+        /// </summary>
+        /// <param name="index">row index</param>
+        /// <returns>False if a contradiction is encountered</returns>
         private bool FillRow(int index)
         {
             bool solved = true;
@@ -244,6 +284,14 @@ namespace SolverLib
             return true;
         }
 
+        /// <summary>
+        /// Fills the leftInts array with all blocks as far left as possible
+        /// </summary>
+        /// <param name="row">row index</param>
+        /// <param name="leftInts">array to edit</param>
+        /// <param name="clueIndex">clue to use for this step in recursion</param>
+        /// <param name="rowPos">current fill position of array. (used for recursion)</param>
+        /// <returns>false if a contradiction is encountered</returns>
         private bool RowLeft(int row, int[] leftInts, int clueIndex, int rowPos)
         {
             int clue = _ng.GetRowNum(row, clueIndex);
@@ -296,6 +344,14 @@ namespace SolverLib
             }
         }
 
+        /// <summary>
+        /// Fills the rightInts array with all blocks as far right as possible
+        /// </summary>
+        /// <param name="row">row index</param>
+        /// <param name="rightInts">array to edit</param>
+        /// <param name="clueIndex">clue to use for this step in recursion</param>
+        /// <param name="rowPos">current fill position of array. (used for recursion)</param>
+        /// <returns>false if a contradiction is encountered</returns>
         private bool RowRight(int row, int[] rightInts, int clueIndex, int rowPos)
         {
             int clue = _ng.GetRowNum(row, clueIndex);
@@ -348,16 +404,28 @@ namespace SolverLib
             }
         }
 
+        /// <summary>
+        /// True if the last run solved the nonogram
+        /// </summary>
+        /// <returns>true if solved</returns>
         public bool Solved()
         {
             return _solved;
         }
 
+        /// <summary>
+        /// Time spent on last run
+        /// </summary>
+        /// <returns></returns>
         public TimeSpan BenchTime()
         {
             return _benchSpan;
         }
 
+        /// <summary>
+        /// Results of the last run
+        /// </summary>
+        /// <returns></returns>
         public List<Result> Results()
         {
             return _resultList ?? new List<Result>();

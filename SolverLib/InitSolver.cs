@@ -7,7 +7,7 @@ using Util;
 namespace SolverLib
 {
     /// <summary>
-    /// calculates simple initial positions for tiles in an empty nonogram
+    /// calculates simple initial positions for tiles in an empty nonogram. Depreceated
     /// </summary>
     public class InitSolver : ISolver
     {
@@ -15,8 +15,13 @@ namespace SolverLib
         private TimeSpan _time = TimeSpan.Zero;
         private List<Result>  _results = new List<Result>();
         private bool?[][] _marked;
-        private Nonogram _ng = null;
+        private Nonogram _ng;
 
+        /// <summary>
+        /// Runs the InitSolver on the specified nonogram
+        /// </summary>
+        /// <param name="ng">Nonogram to work on</param>
+        /// <returns>Number of solved tiles or -1 if an error is detected</returns>
         public int Run(Nonogram ng)
         {
             _ng = ng;
@@ -50,6 +55,11 @@ namespace SolverLib
             return _results.Count;
         }
 
+        /// <summary>
+        /// Attempt to generate results for a specific row
+        /// </summary>
+        /// <param name="row">Row index</param>
+        /// <returns>False if an error was found. else true</returns>
         private bool InitRow(int row)
         {
             int[] rowArr = _ng.GetRowArray(row);
@@ -85,6 +95,12 @@ namespace SolverLib
             return true;
         }
 
+        /// <summary>
+        /// Completely fills a row that can be completely filled
+        /// </summary>
+        /// <param name="row">row index</param>
+        /// <param name="rowArr">clue array for the row</param>
+        /// <returns>False if an error was found. Else true</returns>
         private bool Fillrow(int row, int[] rowArr)
         {
             int idx = 0;
@@ -104,6 +120,11 @@ namespace SolverLib
             return true;
         }
 
+        /// <summary>
+        /// Attempts to generate results for a specific column
+        /// </summary>
+        /// <param name="column">column index</param>
+        /// <returns>False if an error was found. Else true</returns>
         private bool InitColumn(int column)
         {
             int[] colArr = _ng.GetColumnArray(column);
@@ -142,6 +163,12 @@ namespace SolverLib
             return true;
         }
 
+        /// <summary>
+        /// Attempts to completely fill a row that can be completely filled
+        /// </summary>
+        /// <param name="column">Column index</param>
+        /// <param name="colArr">Column clues</param>
+        /// <returns>False if an error was found. Else true</returns>
         private bool FullColumn(int column, int[] colArr)
         {
             int idx = 0;
@@ -172,17 +199,29 @@ namespace SolverLib
             return true;
         }
 
+        /// <summary>
+        /// True if the nonogram was completely solved on the last run
+        /// </summary>
+        /// <returns>True if solved</returns>
         public bool Solved()
         {
             return _solved;
         }
 
+        /// <summary>
+        /// Time spent on the previous run
+        /// </summary>
+        /// <returns></returns>
         public TimeSpan BenchTime()
         {
             return _time;
         }
 
-        public Util.List<Result> Results()
+        /// <summary>
+        /// List of results for the last run
+        /// </summary>
+        /// <returns>List of results</returns>
+        public List<Result> Results()
         {
             return _results;
         }

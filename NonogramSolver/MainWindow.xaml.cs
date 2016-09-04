@@ -18,7 +18,7 @@ namespace NonogramSolver
     {
         private readonly BackgroundWorker _solveBW = new BackgroundWorker();
         private readonly BackgroundWorker _fillBW = new BackgroundWorker();
-        private const int Waittime = 75;
+        private const int Waittime = 10;
         private bool _running;
         private List<Result> _resultQueue;
         public MainWindow()
@@ -35,6 +35,11 @@ namespace NonogramSolver
             _fillBW.DoWork += _fillBW_DoWork;
         }
 
+        /// <summary>
+        /// Event handler that gets called when a nonogram text file gets dropped.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Grid_Drop(object sender, DragEventArgs e)
         {
             if (_running) return;
@@ -42,18 +47,28 @@ namespace NonogramSolver
             _running = true;
             try
             {
-                Nonogram ng = NonoGramFactory.ParseFromFile(((DataObject)e.Data).GetFileDropList()[0]);
+                Nonogram ng = NonoGramFactory.ParseFromFile(((DataObject) e.Data).GetFileDropList()[0]);
                 MakeGrid(ng);
                 stateBox.Text = "Solving...";
                 _solveBW.RunWorkerAsync(ng);
             }
+            catch (ArgumentException ex)
+            {
+                stateBox.Text = ex.Message;
+                _running = false;
+            }
             catch (Exception)
             {
-                stateBox.Text = "Error while parsing/solving";
+                stateBox.Text = "Unexpected exception while solving";
+                _running = false;
             }
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Sets up a new grid in the window based on the given nonogram
+        /// </summary>
+        /// <param name="ng">Nonogram to solve</param>
         private void MakeGrid(Nonogram ng)
         {
             wGrid.Children.Clear();
@@ -73,6 +88,11 @@ namespace NonogramSolver
             }
         }
 
+        /// <summary>
+        /// BackgroundWorker thread for keeping the window responsive while solving.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _solveBW_DoWork(object sender, DoWorkEventArgs e)
         {
             ISolver ss = new SerialSolver();
@@ -80,6 +100,11 @@ namespace NonogramSolver
             e.Result = ss;
         }
 
+        /// <summary>
+        /// Sets the status text for the window and calls the drawing thread.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _solveBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             ISolver solver = (ISolver)e.Result;
@@ -91,12 +116,17 @@ namespace NonogramSolver
             }
             else
             {
-                stateBox.Text = "Solving failed";
+                stateBox.Text = "Solving failed. Time: " + solver.BenchTime().TotalMilliseconds + "ms.";
                 _resultQueue = solver.Results();
                 _fillBW.RunWorkerAsync(_resultQueue.Count);
             }
         }
 
+        /// <summary>
+        /// BackgroundWorer thread for keeping the window responsive while drawing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _fillBW_DoWork(object sender, DoWorkEventArgs e)
         {
             int resLen = (int)e.Argument;
@@ -107,6 +137,11 @@ namespace NonogramSolver
             }
         }
 
+        /// <summary>
+        /// Draws the next resolved tile
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _fillBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             Result res = _resultQueue[e.ProgressPercentage];
@@ -116,11 +151,21 @@ namespace NonogramSolver
             wGrid.Children.Add(r);
         }
 
+        /// <summary>
+        /// Just sets dunning to false so that a new nonogram can be added.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _fillBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _running = false;
         }
 
+        /// <summary>
+        /// Event handler of cursor control of drag/drop event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Grid_PreviewDrag(object sender, DragEventArgs e)
         {
             if (_running)

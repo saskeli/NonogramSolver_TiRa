@@ -78,26 +78,6 @@ namespace GameLib
         }
 
         /// <summary>
-        /// Generates a string representation of a column clue
-        /// </summary>
-        /// <param name="i">Column index</param>
-        /// <returns>Ugly string</returns>
-        private string ColumnNumString(int i)
-        {
-            return String.Join(", ", _columnNumbers[i].Select(n => n.ToString()));
-        }
-
-        /// <summary>
-        /// Generates a string representation of a row clue
-        /// </summary>
-        /// <param name="i">Row index</param>
-        /// <returns>Ugly string</returns>
-        private string RowsNumString(int i)
-        {
-            return String.Join(", ", _rowNumbers[i].Select(n => n.ToString()));
-        }
-
-        /// <summary>
         /// Generates a string reperesentation of the state of a row of the nonogram
         /// </summary>
         /// <param name="i">Row index</param>
@@ -286,6 +266,12 @@ namespace GameLib
             return _tiles.All(x => x[column].State.HasValue);
         }
 
+        /// <summary>
+        /// Adds 1 to the priority of the specified tile.
+        /// </summary>
+        /// <param name="row">row index</param>
+        /// <param name="column">column index</param>
+        /// <returns>True if incrementing priority was possible</returns>
         public bool AddPrio(int row, int column)
         {
             if (row < 0 || column < 0 || row >= Height || column >= Width)

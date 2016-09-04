@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameLib;
 using Util;
-using System.Windows;
 
 namespace SolverLib
 {
+    /// <summary>
+    /// Solver that uses LineSolver, Trialsolver and Treesolver to efficiently solve nonograms
+    /// </summary>
     public class SerialSolver : ISolver
     {
         private bool _solved;
         private TimeSpan _benchTime = TimeSpan.Zero;
         private List<Result> _results = new List<Result>();
-        private Nonogram _ng = null;
+        private Nonogram _ng;
         private readonly bool _smalltree;
         private TileHeap _th;
 
@@ -27,11 +26,19 @@ namespace SolverLib
             _smalltree = smallTree;
         }
 
+        /// <summary>
+        /// SerialSolver constructor that skips treesolving for big unknowns.
+        /// </summary>
         public SerialSolver()
         {
             _smalltree = true;
         }
 
+        /// <summary>
+        /// Runs the SerialSolver
+        /// </summary>
+        /// <param name="ng">Nonogram to solve</param>
+        /// <returns>Number of solver tiles or -1 if a contradiction was encountered</returns>
         public int Run(Nonogram ng)
         {
             _ng = ng.Copy();
@@ -96,6 +103,10 @@ namespace SolverLib
             return _results.Count;
         }
 
+        /// <summary>
+        /// Updates this solver with results from another solver
+        /// </summary>
+        /// <param name="resQueue">results from another solver</param>
         private void Update(List<Result> resQueue)
         {
             while (!resQueue.IsEmpty)
@@ -107,6 +118,11 @@ namespace SolverLib
             }
         }
 
+        /// <summary>
+        /// Updates (adds 1 to) priority of specified tile
+        /// </summary>
+        /// <param name="row">row index</param>
+        /// <param name="column">column index</param>
         private void UpdatePrioHeap(int row, int column)
         {
             for (int i = row - 1; i < row + 2; i++)
@@ -121,16 +137,28 @@ namespace SolverLib
             }
         }
 
+        /// <summary>
+        /// True if the last run resulted in a solution
+        /// </summary>
+        /// <returns>true if solved</returns>
         public bool Solved()
         {
             return _solved;
         }
 
+        /// <summary>
+        /// Time spent on the last run of the solver
+        /// </summary>
+        /// <returns></returns>
         public TimeSpan BenchTime()
         {
             return _benchTime;
         }
 
+        /// <summary>
+        /// Results of the last run
+        /// </summary>
+        /// <returns></returns>
         public List<Result> Results()
         {
             return _results;
