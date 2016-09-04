@@ -73,7 +73,6 @@ namespace SolverLib
                     _solved = fSolver.Solved();
                 }
             }
-            Console.WriteLine("trialsolver returns: " + _resultList.Count);
             return _resultList.Count;
         }
 

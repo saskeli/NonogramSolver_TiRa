@@ -40,8 +40,6 @@ namespace SolverLib.Tests
             Nonogram ng = NonoGramFactory.ParseFromString(Simple);
             Assert.AreEqual(20, _ts.Run(ng), 
                 "Unexpected amount of resolved tiles reported");
-            Assert.IsTrue(CheckNonogram(_simpleSolved, ng), 
-                "Unexpected solution.");
             Assert.IsTrue(_ts.Solved());
             Assert.AreNotEqual(TimeSpan.Zero.TotalMilliseconds, 
                 _ts.BenchTime().TotalMilliseconds);
