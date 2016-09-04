@@ -11,14 +11,14 @@ Initial information on solution methods has been taken from [wikipedia](https://
 The idea is to create multiple solving algorithms with complexities ranging essentially from O(n) to O(2^n). 
 Where the Low complexity algorithms will be very naive and only able to solve trivial nonograms, and the high complexity algorithms will essentially be game trees that are guaranteed to find all possible solutions. Additionally the aim is to also be able to run multiple algorithms both sequantially, recursively and/or in parallell to hopefully make efficient use of computing power and to hopefully solve very complex nonograms efficiently. 
 
-##Data structures ans Space complexity
+##Data structures and Space complexity
 
 Fairly few advanced data structures should be needed, due to the grid based design of nonograms.
 Square and jagged arrays of integers and structs will be sufficient for most of the algorithms.
 Linked lists and array-lists will find limited use.
 The only tricky data structure that I know I'll need to do at this time is a "hashing" Max-heap. This is simplified however by the fact that no hashing will actually be needed since the used data sets are well defined.
 
-Space requirements will generally be O(n) even some of the algorithms could potentially require faitly high multiples of n.
+Space requirements will generally be O(n) even some of the algorithms could potentially require fairly high multiples of n.
 
 ##Input / Output
 
