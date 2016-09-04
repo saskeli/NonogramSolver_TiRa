@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GameLib
 {
     /// <summary>
     /// Class representing a nonogram tile
     /// </summary>
-    internal class Tile: IComparable<Tile>
+    internal class Tile : IComparable<Tile>
     {
         /// <summary>
         /// Tile priority. Approximately how usefull would it be to resolve this tile

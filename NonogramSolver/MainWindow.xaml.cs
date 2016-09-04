@@ -1,4 +1,5 @@
-﻿using GameLib;
+﻿using System;
+using GameLib;
 using SolverLib;
 using System.ComponentModel;
 using System.Threading;
@@ -13,12 +14,12 @@ namespace NonogramSolver
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly BackgroundWorker _solveBW = new BackgroundWorker();
         private readonly BackgroundWorker _fillBW = new BackgroundWorker();
-        private const int WAITTIME = 100;
-        private bool _running = false;
+        private const int Waittime = 75;
+        private bool _running;
         private List<Result> _resultQueue;
         public MainWindow()
         {
@@ -39,10 +40,17 @@ namespace NonogramSolver
             if (_running) return;
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
             _running = true;
-            Nonogram ng = NonoGramFactory.ParseFromFile(((DataObject)e.Data).GetFileDropList()[0]);
-            MakeGrid(ng);
-            stateBox.Text = "Solving...";
-            _solveBW.RunWorkerAsync(ng);
+            try
+            {
+                Nonogram ng = NonoGramFactory.ParseFromFile(((DataObject)e.Data).GetFileDropList()[0]);
+                MakeGrid(ng);
+                stateBox.Text = "Solving...";
+                _solveBW.RunWorkerAsync(ng);
+            }
+            catch (Exception)
+            {
+                stateBox.Text = "Error while parsing/solving";
+            }
             e.Handled = true;
         }
 
@@ -54,15 +62,13 @@ namespace NonogramSolver
             GridLength gl = new GridLength(15);
             for (int i = 0; i < ng.Width; i++)
             {
-                ColumnDefinition cd = new ColumnDefinition();
-                cd.Width = gl;
+                ColumnDefinition cd = new ColumnDefinition {Width = gl};
                 wGrid.ColumnDefinitions.Add(cd);
             }
             
             for (int i = 0; i < ng.Height; i++)
             {
-                RowDefinition rd = new RowDefinition();
-                rd.Height = gl;
+                RowDefinition rd = new RowDefinition {Height = gl};
                 wGrid.RowDefinitions.Add(rd);
             }
         }
@@ -83,6 +89,12 @@ namespace NonogramSolver
                 _resultQueue = solver.Results();
                 _fillBW.RunWorkerAsync(_resultQueue.Count);
             }
+            else
+            {
+                stateBox.Text = "Solving failed";
+                _resultQueue = solver.Results();
+                _fillBW.RunWorkerAsync(_resultQueue.Count);
+            }
         }
 
         private void _fillBW_DoWork(object sender, DoWorkEventArgs e)
@@ -91,15 +103,14 @@ namespace NonogramSolver
             for (int i = 0; i < resLen; i++)
             {
                 _fillBW.ReportProgress(i);
-                Thread.Sleep(WAITTIME);
+                Thread.Sleep(Waittime);
             }
         }
 
         private void _fillBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             Result res = _resultQueue[e.ProgressPercentage];
-            Rectangle r = new Rectangle();
-            r.Fill = res.State ? Brushes.Black : Brushes.White;
+            Rectangle r = new Rectangle {Fill = res.State ? Brushes.Black : Brushes.White};
             Grid.SetColumn(r, res.Column);
             Grid.SetRow(r, res.Row);
             wGrid.Children.Add(r);

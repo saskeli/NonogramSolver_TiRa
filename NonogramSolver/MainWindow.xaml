@@ -7,10 +7,9 @@
         mc:Ignorable="d"
         Title="Nonogram Solver" MinHeight="150" MinWidth="150" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
         PreviewDragEnter="Grid_PreviewDrag" PreviewDragOver="Grid_PreviewDrag" Drop="Grid_Drop">
-    <StackPanel Drop="Grid_Drop" PreviewDragEnter="Grid_PreviewDrag" PreviewDragOver="Grid_PreviewDrag">
+    <StackPanel >
         <TextBox x:Name="stateBox" IsReadOnly="True" PreviewDrop="Grid_Drop" Margin="5" />
-        <Grid x:Name="wGrid" MinWidth="100" MinHeight="100" Width="auto" Height="auto" Background="Red" 
-              Drop="Grid_Drop" PreviewDragEnter="Grid_PreviewDrag" PreviewDragOver="Grid_PreviewDrag">
+        <Grid x:Name="wGrid" MinWidth="100" MinHeight="100" Width="auto" Height="auto" Background="Red" >
         </Grid>
     </StackPanel>
     

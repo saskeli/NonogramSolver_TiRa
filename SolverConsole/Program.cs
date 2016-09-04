@@ -22,31 +22,18 @@ namespace SolverConsole
             {
                 Console.WriteLine("Benchmarking file: " + Path.GetFileName(file));
                 Nonogram ng = NonoGramFactory.ParseFromFile(file);
-                ISolver serialSolver = new SerialSolver();
-                serialSolver.Run(ng);
-                Console.WriteLine("Solvable with SerialSolver: " + serialSolver.Solved());
-                if (serialSolver.Solved())
+                ISolver s = new SerialSolver(true);
+                s.Run(ng);
+                Console.WriteLine("Solvable with SerialSolver: " + s.Solved());
+                if (s.Solved())
                 {
                     ts = TimeSpan.Zero;
                     for (int i = 0; i < 1000; i++)
                     {
-                        serialSolver.Run(ng);
-                        ts = ts.Add(serialSolver.BenchTime());
+                        s.Run(ng);
+                        ts = ts.Add(s.BenchTime());
                     }
                     Console.WriteLine("Average solving time: " + (ts.TotalMilliseconds / 1000) + "ms");
-                }
-                ISolver treeSolver = new TreeSolver();
-                treeSolver.Run(ng);
-                Console.WriteLine("Solvable with TreeSolver: " + serialSolver.Solved());
-                if (treeSolver.Solved())
-                {
-                    ts = TimeSpan.Zero;
-                    for (int i = 0; i < 10; i++)
-                    {
-                        treeSolver.Run(ng);
-                        ts = ts.Add(treeSolver.BenchTime());
-                    }
-                    Console.WriteLine("Average solving time: " + (ts.TotalMilliseconds / 10) + "ms");
                 }
             }
 

@@ -58,6 +58,11 @@ namespace GameLib
             _tiles = ts;
         }
 
+        public int GetPrio(int row, int column)
+        {
+            return _tiles[row][column].Priority;
+        }
+
         /// <summary>
         /// Generates an ugly string representation of the nonogrma
         /// </summary>
@@ -261,14 +266,34 @@ namespace GameLib
             return new Nonogram(cNums, rNums, ts);
         }
 
+        /// <summary>
+        /// Check if the entire row has been resolved.
+        /// </summary>
+        /// <param name="row">row index</param>
+        /// <returns>true if all tiles on the row are set to true or false</returns>
         public bool FullRow(int row)
         {
             return _tiles[row].All(x => x.State.HasValue);
         }
 
+        /// <summary>
+        /// Check if the entire column has been resolved.
+        /// </summary>
+        /// <param name="column">column index</param>
+        /// <returns>true if all tiles in the column are set to true or false</returns>
         public bool FullColumn(int column)
         {
             return _tiles.All(x => x[column].State.HasValue);
+        }
+
+        public bool AddPrio(int row, int column)
+        {
+            if (row < 0 || column < 0 || row >= Height || column >= Width)
+            {
+                return false;
+            }
+            _tiles[row][column].Priority++;
+            return true;
         }
     }
 }

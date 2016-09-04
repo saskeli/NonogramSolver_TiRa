@@ -163,6 +163,18 @@ namespace Util
                 if (index < -Count || index >= _nextIndex - _startIndex) throw new ArgumentOutOfRangeException();
                 return index < 0 ? _data[_nextIndex + index] : _data[index + _startIndex];
             }
+            set
+            {
+                if (index < -Count || index >= _nextIndex - _startIndex) throw new ArgumentOutOfRangeException();
+                if (index < 0)
+                {
+                    _data[_nextIndex + index] = value;
+                }
+                else
+                {
+                    _data[index + _startIndex] = value;
+                }
+            }
         }
 
         /// <summary>
