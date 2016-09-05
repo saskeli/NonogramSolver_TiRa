@@ -1,0 +1,75 @@
+
+Benchmarking file: Band.txt
+Solvable with SerialSolver: True
+Average solving time: 15,6636ms
+
+Benchmarking file: camera.txt
+Solvable with SerialSolver: True
+Average solving time: 0,471234ms
+
+Benchmarking file: cherries.txt
+Solvable with SerialSolver: True
+Average solving time: 0,018344ms
+
+Benchmarking file: cuppa.txt
+Solvable with SerialSolver: True
+Average solving time: 0,01152ms
+
+Benchmarking file: DiCap.txt
+Solvable with SerialSolver: False
+
+Benchmarking file: diff.txt
+Solvable with SerialSolver: True
+Average solving time: 1,945846ms
+
+Benchmarking file: dom.txt
+Solvable with SerialSolver: False
+
+Benchmarking file: duck.txt
+Solvable with SerialSolver: True
+Average solving time: 0,035958ms
+
+Benchmarking file: Gettys.txt
+Solvable with SerialSolver: False
+
+Benchmarking file: home.txt
+Solvable with SerialSolver: True
+Average solving time: 0,012248ms
+
+Benchmarking file: home2.txt
+Solvable with SerialSolver: True
+Average solving time: 0,045028ms
+
+Benchmarking file: joker.txt
+Solvable with SerialSolver: True
+Average solving time: 3,566842ms
+
+Benchmarking file: knot.txt
+Solvable with SerialSolver: True
+Average solving time: 1,056172ms
+
+Benchmarking file: pelican.txt
+Solvable with SerialSolver: True
+Average solving time: 0,223464ms
+
+Benchmarking file: Petro.txt
+Solvable with SerialSolver: True
+Average solving time: 12,265978ms
+
+Benchmarking file: Sierp.txt
+Solvable with SerialSolver: False
+
+Benchmarking file: Swing.txt
+Solvable with SerialSolver: True
+Average solving time: 3,560702ms
+
+Benchmarking file: tragic.txt
+Solvable with SerialSolver: False
+
+Benchmarking file: unk.txt
+Solvable with SerialSolver: True
+Average solving time: 0,451192ms
+
+Benchmarking file: wake_up.txt
+Solvable with SerialSolver: True
+Average solving time: 0,012494ms
