@@ -53,7 +53,7 @@ Making both the lineSolver and the trialSolver work with multiple threads should
 
 Significant improvements re. solvability could be made by introducing limited recursion in the trial solver. This was not done due to time constraints. The time complexity of the solver quickly goes out of hand if the recursion is not very tightly controlled.
 
-The treeSolver could potentially be improved by integrating the lineSolver. But managing dead ends bekame too hard in this version for me to implement.
+The treeSolver could potentially be improved by integrating the lineSolver. But managing dead ends became too hard in this version for me to implement.
 
 ## Sources
 
