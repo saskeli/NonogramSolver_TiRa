@@ -4,10 +4,16 @@
 
 ## Progress
 
-##Testing
-
-##Benchmarks
+* Made the GUI
+* Made the lineSolver
+* Made the trialSolver
+* A lot of manual testin
+* Loads of documentation
 
 ##Problems
 
-##Next week
+The line solver was very hard to make.
+
+##The future
+
+The project has been intresting and i would like to work on it more in the future. But sadly work and school will take up a lot of time.
