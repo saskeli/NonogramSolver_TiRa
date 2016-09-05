@@ -1,9 +1,13 @@
 # NonogramSolver_TiRa
 Nonogram solver in c#. Project for [datastructure and algorithm](https://github.com/TiraLabra/2016-loppukesa/wiki) course at the University of Helsinki.
 
+**Note:** This course is over. This project will likely not be updated.
+
 ## Links to documentation
 
 ###[Design document](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Design_document.md)
+
+###[Course Wrapup (Toteutusdokumentti)](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Course_Wrapup.md)
 
 ###Weekly reports
 
