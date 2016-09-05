@@ -8,7 +8,7 @@ The idea of an ISolver interface implemented by multiple solvers was very good f
 
 ## Complexity and performance
 
-The overall time complexity of the solutions stayed at O(2<sup>n</sup>) due to the NP-completeness of Nonograms. However mutch progress was made over time to the point where the worst case complexity will never be encountered by the final versions at the end of week 6. Sadly this is done by giving up immediately if it looks like significant use of game trees would be needed. Still the current version of the serialSolver (the one used both for benchmarking and the GUI solutions) solves all but the extremely difficult (for computers) Nonograms in what amounts to trivial time. The performance in both speed and reliability is significantly behind ["industry" leaders (Survey on PBN solvers)](http://webpbn.com/survey/#samptime).
+The overall time complexity of the solutions stayed at O(2<sup>n</sup>) due to the NP-completeness of Nonograms. However much progress was made over time to the point where the worst case complexity will never be encountered by the final versions at the end of week 6. Sadly this is done by giving up immediately if it looks like significant use of game trees would be needed. Still the current version of the serialSolver (the one used both for benchmarking and the GUI solutions) solves all but the extremely difficult (for computers) Nonograms in what amounts to trivial time. The performance in both speed and reliability is significantly behind ["industry" leaders (Survey on PBN solvers)](http://webpbn.com/survey/#samptime).
 
 Name | Solvable | average time|
 -----|----------|-------------|
@@ -37,7 +37,7 @@ All of the files mentioned above are available in the project. (This may change 
 
 DiCap.txt, Sierp.txt, Swing.txt, tragic.txt, Petro.txt, knot.txt, Gettys.txt and dom.txt are all taken from the survey linked above. As these are specifically chosen to be very difficult for automated solving and this solver was never really intended to solve Nonograms with multiple solutions, the results are hardly surprising.
 
-Space complexity is a none-issue. The actual complexity is O(n) with fairly high multiples of n. Still I could not get any meaningfull data on memory scaling with nonogram size/complexity. The overhead of the .NET framework dwarfs the space used by the acutal solving algorithms.
+Space complexity is a non-issue. The actual complexity is O(n) with fairly high multiples of n. Still I could not get any meaningful data on memory scaling with nonogram size/complexity. The overhead of the .NET framework dwarfs the space used by the acutal solving algorithms.
 
 Overall the serial solver is faster and more reliable than bad solvers and significantly worse than good solvers.
 
@@ -45,9 +45,9 @@ Overall the serial solver is faster and more reliable than bad solvers and signi
 
 ### Optimization
 
-I have not tested. But I suspect that significant improvements could be seen if the recursions in the lineSolver and the treeSolver were flattened into loops. This should save time on memory management when less operations on the call stack would be needed. And the used recursions shouldnät compile out since they aren't tail recursions. Either way this would be intresting to test.
+I have not tested, but I suspect that significant improvements could be seen if the recursions in the lineSolver and the treeSolver were flattened into loops. This should save time on memory management when less operations on the call stack would be needed. And the used recursions shouldn't compile out since they aren't tail recursions. Either way this would be intresting to test.
 
-Making both the lineSolver and the trialSolver work with multiple threads should be fairly doable and should lead to significant performance imrovements.
+Making both the lineSolver and the trialSolver work with multiple threads should be fairly doable and should lead to significant performance improvements.
 
 ### Reliability
 
