@@ -32,13 +32,18 @@ Date       | time | target |
 2016-08-19 | 3h   | Data structures |
 2016-08-21 | 4h   | Solver coding, documentation |
 
-##Week 4
+##Week 5
 
 Date       | time | target |
 -----------|------|--------|
 2016-08-27 | 3h   | Solver coding |
 2016-08-28 | 3h   | Solver coding |
 2016-08-29 | 3h   | Benchmarking and documentation |
+
+##Week 6
+Date       | time | target |
+-----------|------|--------|
+week 6 | 20h?   | I worked a lot in mornings and evening after and before tutoring acitivites. But this week was so hectic I have no idea what times I was actually working on this. |
 
 ##Totals
 
@@ -48,5 +53,6 @@ Date       | time | target |
  2      | 18       |
  3      | 4        |
  4      | 15       |
- 5      | 9       |
-**Tot** | **55,5** |
+ 5      | 9        |
+ 6      | 20?      |
+**Tot** | **75,5** |
