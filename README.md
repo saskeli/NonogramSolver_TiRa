@@ -9,6 +9,10 @@ Nonogram solver in c#. Project for [datastructure and algorithm](https://github.
 
 ###[Course Wrapup (Toteutusdokumentti)](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Course_Wrapup.md)
 
+###[Testing documentation](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Testing_document.md)
+
+###[User Guide](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/User_Guide.md)
+
 ###Weekly reports
 
 * [Weekly report #1](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Weekly_report_1.md)
