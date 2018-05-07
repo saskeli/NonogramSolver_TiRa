@@ -1,4 +1,4 @@
-#Week 5
+# Week 5
 
 [Hour reporting](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Hour_reporting.md)
 
@@ -7,17 +7,17 @@
 First sort of usable solver done.
 Initial benchmark results and general performance analysis.
 
-##Testing
+## Testing
 
-[Test coverage] (https://www.cs.helsinki.fi/u/saska/Coverage/ListInitTest.html)
+[Test coverage](https://www.cs.helsinki.fi/u/saska/Coverage/ListInitTest.html)
 
 Test coverage is available outside of github so it can be more readily browsed without downloading.
 Test coverage has not been updated this week, since no new tests were done.
 Test coverage as well as documentation will be improved next.
 
-##Benchmarks
+## Benchmarks
 
-![Benchmark results] (https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Data/benchmarks.png)
+![Benchmark results](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Data/benchmarks.png)
 
 Solving easy nonograms is now fairly practical with the SerialSolver.
 
@@ -27,11 +27,11 @@ The [Cherries](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Data/c
 
 Memory use of the solvers is trivial on modern computers.
 
-##Problems
+## Problems
 
 Who knew designing algorithms for solving NP complete problems was hard?
 
-##Next week
+## Next week
 
 * Documentation
 * Tests
