@@ -1,8 +1,8 @@
-#Week 3
+# Week 3
 
 [Hour reporting](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Hour_reporting.md)
 
-##Progress on predifined goals
+## Progress on predifined goals
 
 Week 3 course goals:
 
