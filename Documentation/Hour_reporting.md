@@ -1,6 +1,6 @@
-#Hour reporting
+#  reporting
 
-##Week 1
+## Week 1
 
 Date       | time | target |
 -----------|------|--------|
@@ -9,21 +9,21 @@ Date       | time | target |
 2016-07-29 | 3h   | Structure dedign. Started coding (none of this code survived) A lot never even got to git |
 2016-08-01 | 3h   | Structure design. Started coding some real usable code |
 
-##Week 2
+## Week 2
 
 Date       | time | target |
 -----------|------|--------|
 2016-08-06 | 10h  | Made working file/string parser. Made solver interface. Made List structure. Made a "working" nonogram solver that scales at 2<sup>n</sup>. |
 2016-08-07 | 8h   | Writing tests. Updating documentation. Generating Unit test covverage report |
 
-##Week 3
+## Week 3
 
 Date       | time | target |
 -----------|------|--------|
 2016-08-08 | 2h   | Research |
 2016-08-09 | 2h   | More research |
 
-##Week 4
+## Week 4
 
 Date       | time | target |
 -----------|------|--------|
@@ -32,7 +32,7 @@ Date       | time | target |
 2016-08-19 | 3h   | Data structures |
 2016-08-21 | 4h   | Solver coding, documentation |
 
-##Week 5
+## Week 5
 
 Date       | time | target |
 -----------|------|--------|
@@ -40,12 +40,12 @@ Date       | time | target |
 2016-08-28 | 3h   | Solver coding |
 2016-08-29 | 3h   | Benchmarking and documentation |
 
-##Week 6
+## Week 6
 Date       | time | target |
 -----------|------|--------|
 week 6 | 20h?   | I worked a lot in mornings and evening after and before tutoring acitivites. But this week was so hectic I have no idea what times I was actually working on this. |
 
-##Totals
+## Totals
 
  Week   | Time     |
 --------|----------|
