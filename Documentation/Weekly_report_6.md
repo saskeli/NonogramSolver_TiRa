@@ -1,4 +1,4 @@
-#Week 6
+# Week 6
 
 [Hour reporting](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Hour_reporting.md)
 
@@ -10,10 +10,10 @@
 * A lot of manual testin
 * Loads of documentation
 
-##Problems
+## Problems
 
 The line solver was very hard to make.
 
-##The future
+## The future
 
 The project has been intresting and i would like to work on it more in the future. But sadly work and school will take up a lot of time.
