@@ -2,7 +2,7 @@
 
 The initial design envisioned for the project has held fairly well. The conceptual design diagram is still as accurate as ever.
 
-![Conceptual diagram] (https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Data/Rough_structural_design_diagram.png)
+![Conceptual diagram](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Data/Rough_structural_design_diagram.png)
 
 The idea of an ISolver interface implemented by multiple solvers was very good for the structure even if it wasn't strictly needed in the end. Dual entry points was very convenient, since it enabled working on the algorithms with an extremely simple console application as the entry point for most of the project without stressing over the GUI.
 
