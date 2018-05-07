@@ -1,8 +1,8 @@
-#Week 2
+# Week 2
 
 [Hour reporting](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Hour_reporting.md)
 
-##Progress on predifined goals
+## Progress on predifined goals
 
 Week 2 course goals:
 
@@ -16,13 +16,13 @@ Goals from week 1:
 * Bunch of coding done
 * Working (very bad) solver can solve trivial nonograms
 
-##Testing
+## Testing
 
-![Test coverage] (https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Data/Coverage.png)
+![Test coverage](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Data/Coverage.png)
 
 Test coverage is actually better than it looks. Neither "SolverConsole" not "NonogramSolver" contain testable code. The lacking coverage on GameLib is due to not being able to test the file parser yet and upcoming changes to ToString and similar methods that would make writing tests now useless.
 
-##What has happened during week 2
+## What has happened during week 2
 
 * Refining of project structure
 * Writing of first "working" solver
@@ -32,15 +32,15 @@ Test coverage is actually better than it looks. Neither "SolverConsole" not "Non
 
 Majority of time this week has been spent on writing the first (very bad) solver and test writing.
 
-##Problems
+## Problems
 
 None significant. Though initial solver is even worse than expected
 
-##What I learned this week
+## What I learned this week
 
 Never really got into writing unit tests in c# before. Especially with ReShaper.
 
-##Next week
+## Next week
 
 * More solvers
 * Optimize current TreeSolver a bit
