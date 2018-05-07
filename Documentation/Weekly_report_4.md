@@ -1,4 +1,4 @@
-#Week 4
+# Week 4
 
 [Hour reporting](https://github.com/saskeli/NonogramSolver_TiRa/blob/master/Documentation/Hour_reporting.md)
 
@@ -10,26 +10,26 @@ Week 4 course goals:
 * Progress on program - very bad solver done, started work on other solver.
 * Testing - See testing
 
-##Testing
+## Testing
 
-[Test coverage] (https://www.cs.helsinki.fi/u/saska/Coverage/ListInitTest.html)
+[Test coverage](https://www.cs.helsinki.fi/u/saska/Coverage/ListInitTest.html)
 
 I uploaded the test coverage report outside of github so it can be more readily browsed without downloading.
 
-##What has happened during week 4
+## What has happened during week 4
 
 
 Generally loads of research and thinking. I think I've figured out how I want to implement the other solvers and possibly how some optimizing of the last resort treeSolver could be done. Very little coding tho. Some work on data structure and a little solver work.
 
-##Problems
+## Problems
 
 Who knew designing algorithms for solving NP complete problems was hard?
 
-##What I learned this week
+## What I learned this week
 
 Recursions make my head hurt. The optimization of the treeSolver should include weird nested recursions.
 
-##Next week
+## Next week
 
 Same as last week and the week before. Hopefully start getting some real coding done.
 
